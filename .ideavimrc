@@ -1,0 +1,133 @@
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" Map the leader key to the <space>
+ map <space> <Leader>
+" Stablish the timeout to wait after the leader key is pressed
+" Setting the time to 0 (in milliseconds) means that if we press <space>
+" the which-key will be wait indefinetly until the next key is pressed.
+" By default the timeout is 1000, setting it to 0 means the vim wont execute
+" the operation
+" set timeoutlen=1000
+set notimeout
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+" Plug 'preservim/nerdtree'
+" set nerdtree
+set sneak
+set clipboard^=unnamed,unnamedplus
+
+
+
+
+" Which-key settings
+set which-key
+let g:WhichKey_FontSize = 16
+let g:WhichKey_CommandColor = "#41ead4"
+let g:WhichKey_PrefixColor = "#f335b2"
+let g:WhichKey_SortOrder = "by_key_prefix_first"
+"Display all the VIMs motions
+let g:WhichKey_ShowVimActions = "false"
+
+" make the popup appear much slower
+let g:WhichKey_DefaultDelay = 600
+
+" Which-key CODE
+let g:WhichKeyDesc_code        = "<leader>c [C]ode"
+let g:WhichKeyDesc_code_format        = "<leader>cf Format code"
+let g:WhichKeyDesc_code_comment        = "<leader>cc Comment/Uncomment"
+let g:WhichKeyDesc_code_build        = "<leader>cb Build"
+let g:WhichKeyDesc_code_run        = "<leader>cr Run"
+let g:WhichKeyDesc_code_usages        = "<leader>cu Find Usages"
+
+" BuildMenu
+" CommentByLineComment
+
+map <leader>cf <Action>(ReformatCode)
+map <leader>cb <Action>(Build)
+map <leader>cr <Action>(Run)
+map <leader>cc <Action>(CommentByLineComment)
+map <leader>cu <Action>(FindUsages)
+
+" Which-key DEBUG
+let g:WhichKeyDesc_debug       = "<leader>d [D]ebug"
+let g:WhichKeyDesc_debug_tooglebg       = "<leader>db Toogle breakpoint"
+let g:WhichKeyDesc_debug_run      = "<leader>ds Start debugging"
+
+map <leader>db <Action>(ToggleLineBreakpoint)
+map <leader>ds <Action>(Debug)
+
+" Which-key FILES SEARCH
+let g:WhichKeyDesc_filenav       = "<leader>f [F]ile/Search"
+let g:WhichKeyDesc_filenav_gotofile       = "<leader>ff GoTo File"
+let g:WhichKeyDesc_filenav_findinpath       = "<leader>fc Find in files"
+let g:WhichKeyDesc_filenav_findtext       = "<leader>ft Find text globally"
+
+map <leader>ff <action>(GotoFile)
+map <leader>fc <action>(FindInPath)
+map <leader>ft <Action>(TextSearchAction)
+
+" Which-key WINDOW SPLITS
+let g:WhichKeyDesc_filenav       = "<leader>w [W]indows"
+let g:WhichKeyDesc_filenav_movetab       = "<leader>wm Move tab to opposite tab group"
+let g:WhichKeyDesc_filenav_movetabright       = "<leader>wl Move tab right (care errors)"
+let g:WhichKeyDesc_filenav_split       = "<leader>ws Split"
+let g:WhichKeyDesc_filenav_unsplit       = "<leader>wu Unsplit"
+let g:WhichKeyDesc_filenav_closeothertabs       = "<leader>wc Close other tabs"
+let g:WhichKeyDesc_filenav_closethissplit       = "<leader>wC Close this split"
+
+map <leader>ws <Action>(SplitVertically)
+map <leader>wl <Action>(MoveTabRight)
+map <leader>wu <Action>(Unsplit)
+map <leader>wm <Action>(MoveEditorToOppositeTabGroup)
+map <leader>wc <Action>(CloseAllEditorsButActive)
+map <leader>wC <Action>(CloseAllEditors)
+
+" WHICHKEY ERROR NAVIGATION
+let g:WhichKeyDesc_errornav       = "<leader>e [E]rror nav"
+let g:WhichKeyDesc_errornav_next       = "<leader>en Goto Next error"
+map <leader>en <Action>(GotoNextError)
+
+" WHICHKEY MAIN PANE
+" Close active tab
+let g:WhichKeyDesc_closecurrtab       = "<leader>q Close current tab"
+let g:WhichKeyDesc_switch_headersource      = "<leader>o Switch header/source"
+let g:WhichKeyDesc_clearhighlightedtext      = "<leader>h Clear highlight text"
+
+map <leader>q <action>(CloseContent)
+map <leader>o <action>(SwitchHeaderSource)
+" Press <leader>h to clear the hightlighted text
+nnoremap <leader>h :nohlsearch<CR>
+
+
+"" Map \b to toggle the breakpoint on the current line
+" map <leader>x :NERDTreeToggle<CR>
+
+" Move between tabs
+nnoremap <S-l> :tabnext<CR>
+nnoremap <S-h> :tabprev<CR>
+
+" Switch between panes/windows
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" TRIGGER THE ACTIONS
+map <leader>a <Action>(ShowIntentionActions)
