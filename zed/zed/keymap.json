@@ -16,7 +16,8 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-j": "workspace::ActivatePaneDown"
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "alt-q": "pane::CloseActiveItem"
     }
   },
   {
@@ -61,6 +62,7 @@
       // ----
       "space g b t": "editor::ToggleGitBlame", // Toggle git blame in file
       "space g b l": "editor::ToggleGitBlameInline", // Toggle git blame inline
+      "space g g": ["task::Spawn", { "task_name": "LazyGit" }],
       // TASK
       //---- Execute Task
       "space t r": "task::Spawn",
