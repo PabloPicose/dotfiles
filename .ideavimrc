@@ -55,6 +55,7 @@ let g:WhichKeyDesc_code_comment        = "<leader>cc Comment/Uncomment"
 let g:WhichKeyDesc_code_build        = "<leader>cb Build"
 let g:WhichKeyDesc_code_run        = "<leader>cr Run"
 let g:WhichKeyDesc_code_usages        = "<leader>cu Find Usages"
+let g:WhichKeyDesc_code_usages        = "<leader>ct Toggle fold"
 
 " BuildMenu
 " CommentByLineComment
@@ -64,6 +65,7 @@ map <leader>cb <Action>(Build)
 map <leader>cr <Action>(Run)
 map <leader>cc <Action>(CommentByLineComment)
 map <leader>cu <Action>(FindUsages)
+map <leader>ct <Action>(ExpandCollapseToggleAction)
 
 " Which-key DEBUG
 let g:WhichKeyDesc_debug       = "<leader>d [D]ebug"

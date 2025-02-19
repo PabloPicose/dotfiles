@@ -1,0 +1,126 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+      //"space f": "file_finder::Toggle"
+      // PANE
+      // ---- Navigation
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+    "bindings": {
+      // PANE
+      // ---- Navigation
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      // TERMINAL
+      // ---- Management
+      "space t t": "workspace::ToggleBottomDock", // Toggle the terminal
+      // TAB
+      // ---- Management
+      "space q": "pane::CloseActiveItem", // Close the current tab
+      "space w r": "pane::ReopenClosedItem", // Reopen closed tab
+      "space w c": "pane::CloseInactiveItems", // Close all tabs except the current one
+      "space w C": "pane::CloseAllItems", // Close all tabs in the current pane
+      // ---- Navigation
+      "shift-l": "pane::ActivateNextItem",
+      "shift-h": "pane::ActivatePrevItem",
+      // ---- Split
+      "space w s": "pane::SplitRight", // Split the current pane to the right
+      // FIND
+      "space f f": "file_finder::Toggle", // Find a file
+      "space f r": "editor::FindAllReferences", // Find references under cursor in the workspace
+      // TREE WORKSPACE
+      "space h": "workspace::ToggleLeftDock", // Toggle the tree workspace
+      // CODE
+      // ---- Diagnostics
+      "space e n": "editor::GoToDiagnostic",
+      "space e p": "editor::GoToPrevDiagnostic",
+      // ---- Code Actions
+      "space c r": "editor::Rename",
+      "space c f": "editor::Format",
+      "space c t": "editor::ToggleFold",
+      // ---- Navigation
+      "space c d": "editor::GoToDefinitionSplit", // Open the definition in Right Pane
+      // GIT
+      // ----
+      "space g b t": "editor::ToggleGitBlame", // Toggle git blame in file
+      "space g b l": "editor::ToggleGitBlameInline", // Toggle git blame inline
+      // TASK
+      //---- Execute Task
+      "space t r": "task::Spawn",
+      // BUILD
+      "space c m b": [
+        "task::Spawn",
+        { "task_name": "BuildCurrentTarget", "reveal_target": "center" }
+      ],
+      "space c m s": [
+        "task::Spawn",
+        {
+          "task_name": "SelectCurrentBuild",
+          "reveal_target": "center"
+        }
+      ],
+      "space c m r": [
+        "task::Spawn",
+        {
+          "task_name": "RunCurrentTarget"
+        }
+      ]
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+    "bindings": {
+      // Move line up and down
+      "ctrl-shift-j": "editor::MoveLineDown",
+      "ctrl-shift-k": "editor::MoveLineUp",
+      // Format selection
+      "space c f": "editor::FormatSelections"
+    }
+  },
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      // Put key bindings here (in addition to the context above) if you want them to
+      // work when no editor exists.
+      "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Dock",
+    "bindings": {
+      //"ctrl-w r": "workspace::ActivateNextPane"
+      //"ctrl-w l": "workspace::ActivatePaneRight",
+      //"ctrl-w k": "workspace::ActivatePaneUp",
+      //"ctrl-w j": "workspace::ActivatePaneDown"
+      // ... or other keybindings
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "d": "project_panel::Delete",
+      "D": ["project_panel::Delete", { "skip_prompt": true }],
+      "r": "project_panel::Rename",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste"
+    }
+  }
+]
