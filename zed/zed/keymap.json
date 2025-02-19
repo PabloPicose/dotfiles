@@ -83,6 +83,12 @@
         {
           "task_name": "RunCurrentTarget"
         }
+      ],
+      "space c m g": [
+        "task::Spawn",
+        {
+          "task_name": "ConfigureCurrentTarget"
+        }
       ]
     }
   },

@@ -24,6 +24,12 @@
     "args": ["build"]
   },
   {
+    "label": "ConfigureCurrentTarget",
+    "command": "cmake_forge",
+    "args": ["configure"],
+    "reveal": "no_focus"
+  },
+  {
     "label": "LazyGit",
     "command": "lazygit",
     "reveal_target": "center",
