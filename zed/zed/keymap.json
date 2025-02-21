@@ -29,6 +29,12 @@
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
+      // ---- Resizing
+      "ctrl-left": "vim::ResizePaneLeft",
+      "ctrl-right": "vim::ResizePaneRight",
+      "ctrl-up": "vim::ResizePaneUp",
+      "ctrl-down": "vim::ResizePaneDown",
+
       // TERMINAL
       // ---- Management
       "space t t": "workspace::ToggleBottomDock", // Toggle the terminal
@@ -47,7 +53,7 @@
       "space f f": "file_finder::Toggle", // Find a file
       "space f r": "editor::FindAllReferences", // Find references under cursor in the workspace
       // TREE WORKSPACE
-      "space h": "workspace::ToggleLeftDock", // Toggle the tree workspace
+      "space h": "project_panel::ToggleFocus", // Toggle the tree workspace
       // CODE
       // ---- Diagnostics
       "space e n": "editor::GoToDiagnostic",
@@ -67,10 +73,7 @@
       //---- Execute Task
       "space t r": "task::Spawn",
       // BUILD
-      "space c m b": [
-        "task::Spawn",
-        { "task_name": "BuildCurrentTarget", "reveal_target": "center" }
-      ],
+      "space c m b": ["task::Spawn", { "task_name": "BuildCurrentTarget" }],
       "space c m s": [
         "task::Spawn",
         {
@@ -121,6 +124,7 @@
     }
   },
   {
+    // TREE CONTEXT
     "context": "ProjectPanel && not_editing",
     "bindings": {
       "a": "project_panel::NewFile",
@@ -129,6 +133,25 @@
       "r": "project_panel::Rename",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste"
+    }
+  },
+  {
+    // TERMINAL CONTEXT
+    "context": "Terminal",
+    "bindings": {
+      // Split terminal vertical
+      "alt-s": "pane::SplitRight",
+      "alt-v": "terminal::ToggleViMode",
+      "alt-n": "workspace::NewTerminal",
+      // Resize panes
+      "ctrl-left": "vim::ResizePaneLeft",
+      "ctrl-right": "vim::ResizePaneRight",
+      "ctrl-up": "vim::ResizePaneUp",
+      "ctrl-down": "vim::ResizePaneDown",
+      // TABS
+      // --- Movement
+      "ctrl-shift-l": "pane::ActivateNextItem",
+      "ctrl-shift-h": "pane::ActivatePrevItem"
     }
   }
 ]

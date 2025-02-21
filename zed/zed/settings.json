@@ -7,11 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    },
+    "version": "2"
+  },
   "features": {
     "edit_prediction_provider": "zed"
   },
-  "icon_theme": "JetBrains New UI Icons (Dark)",
-  "theme": "JetBrains New Dark",
+  "icon_theme": "Catppuccin Latte",
+  "theme": "Catppuccin Mocha",
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "always"

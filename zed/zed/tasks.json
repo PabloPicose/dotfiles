@@ -1,27 +1,22 @@
 // Static tasks configuration.
-//
-// Example:
 [
   {
     "label": "SelectCurrentBuild",
     "command": "cmake_forge",
     "args": ["select-current-build"],
-    "hide": "on_success"
+    "hide": "always"
   },
   {
     "label": "RunCurrentTarget",
     "command": "cmake_forge",
-    "args": ["run"]
-  },
-  {
-    "label": "RunCurrentTarget",
-    "command": "cmake_forge",
-    "args": ["run"]
+    "args": ["run"],
+    "reveal": "no_focus"
   },
   {
     "label": "BuildCurrentTarget",
     "command": "cmake_forge",
-    "args": ["build"]
+    "args": ["build"],
+    "reveal": "no_focus"
   },
   {
     "label": "ConfigureCurrentTarget",
