@@ -17,7 +17,8 @@
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
-      "alt-q": "pane::CloseActiveItem"
+      "alt-q": "pane::CloseActiveItem",
+      "alt-m": "zed::ToggleFullScreen"
     }
   },
   {
@@ -52,6 +53,7 @@
       // FIND
       "space f f": "file_finder::Toggle", // Find a file
       "space f r": "editor::FindAllReferences", // Find references under cursor in the workspace
+      "space f s": "project_symbols::Toggle", // Find symbols
       // TREE WORKSPACE
       "space h": "project_panel::ToggleFocus", // Toggle the tree workspace
       // CODE
@@ -132,7 +134,8 @@
       "D": ["project_panel::Delete", { "skip_prompt": true }],
       "r": "project_panel::Rename",
       "c": "project_panel::Copy",
-      "p": "project_panel::Paste"
+      "p": "project_panel::Paste",
+      "x": "project_panel::Cut"
     }
   },
   {

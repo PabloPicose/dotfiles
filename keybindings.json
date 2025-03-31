@@ -1,0 +1,270 @@
+// Place your key bindings in this file to override the defaults
+[
+    // NAVIGATION
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft",
+        "when": "(editorTextFocus || explorerViewletFocus) && !terminalFocus && neovim.mode != 'cmdline'"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight",
+        "when": "(editorTextFocus || explorerViewletFocus) && !terminalFocus && neovim.mode != 'cmdline'"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown",
+        "when": "(editorTextFocus || explorerViewletFocus || terminalFocus) && neovim.mode != 'cmdline'"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp",
+        "when": "(editorTextFocus || explorerViewletFocus || terminalFocus) && neovim.mode != 'cmdline'"
+    },
+    // CODE
+    {
+        "key": "space o",
+        "command": "C_Cpp.SwitchHeaderSource",
+        "when": "editorTextFocus && neovim.mode == 'normal' && editorLangId =~ /^(c|(cuda-)?cpp)$/ && !(config.C_Cpp.intelliSenseEngine =~ /^[dD]isabled$/)"
+    },
+    // CODE FORMAT
+    {
+        "key": "space c f f", // Format the whole code
+        "command": "editor.action.formatDocument",
+        "when": "editorTextFocus && editorHasDocumentFormattingProvider && !editorReadonly && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c f c", // Format modified code
+        "command": "editor.action.formatChanges",
+        "when": "editorTextFocus && editorHasDocumentFormattingProvider && !editorReadonly && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c f s",
+        "command": "editor.action.formatSelection", // Format selected code
+        "when": "editorTextFocus && editorHasDocumentFormattingProvider && !editorReadonly && neovim.mode != 'cmdline' && neovim.mode != 'insert'"
+    },
+    {
+        "key": "space c r",
+        "command": "editor.action.rename",
+        "when": "editorTextFocus && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c t",
+        "command": "editor.toggleFold", // Not working really well
+        "when": "editorTextFocus && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "editorTextFocus && neovim.mode == 'normal'"
+    },
+    // TERMINAL
+    {
+        "key": "alt+s",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "ctrl+h", // Move to the previous terminal tab
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && neovim.mode != 'cmdline'"
+    },
+    {
+        "key": "ctrl+l", // Move to the next terminal tab
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && neovim.mode != 'cmdline'"
+    },
+    {
+        "key": "alt+l", // Clear terminal
+        "command": "workbench.action.terminal.clear",
+        "when": "terminalFocus && neovim.mode != 'cmdline'"
+    },
+    {
+        "key": "alt+q",
+        "command": "workbench.action.terminal.kill",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "workbench.action.terminal.focusTabs",
+        "when": "(terminalHasBeenCreated || terminalProcessSupported) && terminalFocus"
+    },
+    // TABS or EDITORS NAVIGATION
+    {
+        "key": "shift+l",
+        "command": "workbench.action.nextEditorInGroup",
+        "when": "!activeEditorGroupEmpty && neovim.mode == 'normal'"
+    },
+    {
+        "key": "shift+h",
+        "command": "workbench.action.previousEditorInGroup",
+        "when": "!activeEditorGroupEmpty && neovim.mode == 'normal'"
+    },
+    // TABS or EDITORS MOVE/CLOSE
+    {
+        "key": "space e l",
+        "command": "workbench.action.moveEditorToNextGroup",
+        "when": "!activeEditorGroupEmpty && neovim.mode == 'normal' && editorFocus"
+    },
+    {
+        "key": "space e h",
+        "command": "workbench.action.moveEditorToPreviousGroup",
+        "when": "!activeEditorGroupEmpty && neovim.mode == 'normal' && editorFocus"
+    },
+    {
+        "key": "space e c",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "editorFocus && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space e shift+c", // Close the others editors in this group except the active one
+        "command": "workbench.action.closeOtherEditors",
+        "when": "editorFocus && neovim.mode == 'normal'"
+    },
+    // ERROR NAVIGATION
+    {
+        "key": "space e n",
+        "command": "editor.action.marker.next",
+        "when": "editorFocus && neovim.mode == 'normal'"
+    },
+    // TREE 'SIDEBAR'
+    {
+        "key": "space s t",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "editorFocus && !activeEditorGroupEmpty && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space s g", // go to the sidebar tree
+        "command": "workbench.explorer.fileView.focus",
+        "when": "editorFocus && !activeEditorGroupEmpty && neovim.mode == 'normal'"
+    },
+    // FIND
+    {
+        "key": "space f f", // Find files
+        "command": "workbench.action.quickOpen",
+        "when": "editorFocus && neovim.mode == 'normal'"
+    },
+    // CMAKE TOOLS
+    {
+        "key": "space c m b", // CMake build
+        "command": "cmake.build",
+        "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c m g", // CMake configure
+        "command": "cmake.configure",
+        "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c m p", // Select preset
+        "command": "cmake.projectStatus.selectConfigurePreset",
+        "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    },
+    // {
+    //     "key": "space c m t", // Set build target
+    //     "command": "cmake.setDefaultTarget",
+    //     "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    // },
+    {
+        "key": "space c m t",
+        "command": "cmake.selectLaunchTarget",
+        "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c m r",
+        "command": "cmake.launchTarget",
+        "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space c m d",
+        "command": "cmake.debugTarget",
+        "when": "editorFocus && cmake:enableFullFeatureSet && !cmake:hideBuildCommand && neovim.mode == 'normal'"
+    },
+    // DEBUG
+    {
+        "key": "space d b",
+        "command": "editor.debug.action.toggleBreakpoint",
+        "when": "editorFocus && neovim.mode == 'normal'"
+    },
+    {
+        "key": "space d i", // Step into
+        "command": "workbench.action.debug.stepInto",
+        "when": "editorFocus && neovim.mode == 'normal' && debugState == 'stopped'"
+    },
+    {
+        "key": "space d r", // Run To Cursor 
+        "command": "editor.debug.action.runToCursor",
+        "when": "editorFocus && neovim.mode == 'normal' && debugState == 'stopped'"
+    },
+    {
+        "key": "space d n", // Step over
+        "command": "workbench.action.debug.stepOver",
+        "when": "editorFocus && neovim.mode == 'normal' && debugState == 'stopped'"
+    },
+    {
+        "key": "space d shift+o", // Step out 
+        "command": "workbench.action.debug.stepOut",
+        "when": "editorFocus && neovim.mode == 'normal' && debugState == 'stopped'"
+    },
+    // OTHERS 
+    {
+        "key": "alt+a",
+        "command": "-editor.action.accessibilityHelpConfigureAssignedKeybindings",
+        "when": "accessibilityHelpIsShown && accessibleViewHasAssignedKeybindings"
+    },
+    {
+        "key": "alt+k",
+        "command": "-editor.action.accessibilityHelpConfigureKeybindings",
+        "when": "accessibilityHelpIsShown && accessibleViewHasUnassignedKeybindings"
+    },
+    {
+        "key": "alt+h",
+        "command": "-editor.action.accessibilityHelpOpenHelpLink",
+        "when": "accessibilityHelpIsShown"
+    },
+    {
+        "key": "alt+c",
+        "command": "-toggleFindCaseSensitive",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+l",
+        "command": "-toggleFindInSelection",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+r",
+        "command": "-toggleFindRegex",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "-toggleFindWholeWord",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+p",
+        "command": "-togglePreserveCase",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+c",
+        "command": "-toggleSearchCaseSensitive",
+        "when": "searchViewletFocus"
+    },
+    {
+        "key": "alt+p",
+        "command": "-toggleSearchPreserveCase",
+        "when": "searchViewletFocus"
+    },
+    {
+        "key": "alt+r",
+        "command": "-toggleSearchRegex",
+        "when": "searchViewletFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "-toggleSearchWholeWord",
+        "when": "searchViewletFocus"
+    },
+]

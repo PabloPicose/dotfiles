@@ -8,14 +8,18 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "assistant": {
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4o"
-    },
-    "version": "2"
+    "version": "2",
+    "enabled": false
+    // "default_model": {
+    //   "provider": "copilot_chat",
+    //   "model": "gpt-4o"
+    // },
+    // "version": "2"
   },
   "features": {
-    "edit_prediction_provider": "zed"
+    //"edit_prediction_provider": "zed"
+    "edit_prediction_provider": "none",
+    "copilot": false
   },
   "icon_theme": "Catppuccin Latte",
   "theme": "Catppuccin Mocha",
@@ -26,7 +30,6 @@
   "inlay_hints": {
     "enabled": false // Shows in 'grey' the function type arguments
   },
-  "ui_font_size": null,
   "buffer_font_size": 16.0,
   //"buffer_font_family": "JetBrainsMono Nerd Font",
   "cursor_blink": false,
@@ -34,5 +37,8 @@
     "inline_blame": {
       "enabled": false
     }
+  },
+  "file_types": {
+    "CMake": ["CMakeLists.txt"]
   }
 }

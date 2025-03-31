@@ -4,7 +4,7 @@
     "label": "SelectCurrentBuild",
     "command": "cmake_forge",
     "args": ["select-current-build"],
-    "hide": "always"
+    "hide": "on_success"
   },
   {
     "label": "RunCurrentTarget",
@@ -17,12 +17,14 @@
     "command": "cmake_forge",
     "args": ["build"],
     "reveal": "no_focus"
+    //"hide": "on_success"
   },
   {
     "label": "ConfigureCurrentTarget",
     "command": "cmake_forge",
     "args": ["configure"],
     "reveal": "no_focus"
+    //"hide": "on_success"
   },
   {
     "label": "LazyGit",
