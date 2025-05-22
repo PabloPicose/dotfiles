@@ -47,7 +47,7 @@
       "space w C": "pane::CloseAllItems", // Close all tabs in the current pane
       // ---- Navigation
       "shift-l": "pane::ActivateNextItem",
-      "shift-h": "pane::ActivatePrevItem",
+      "shift-h": "pane::ActivatePreviousItem",
       // ---- Split
       "space w s": "pane::SplitRight", // Split the current pane to the right
       // FIND
@@ -55,20 +55,25 @@
       "space f r": "editor::FindAllReferences", // Find references under cursor in the workspace
       "space f s": "project_symbols::Toggle", // Find symbols
       // TREE WORKSPACE
-      "space h": "project_panel::ToggleFocus", // Toggle the tree workspace
+      "space l l": "project_panel::ToggleFocus", // Toggle the tree workspace
+      "space l t": "workspace::ToggleLeftDock",
       // CODE
       // ---- Diagnostics
       "space e n": "editor::GoToDiagnostic",
-      "space e p": "editor::GoToPrevDiagnostic",
+      "space e p": "editor::GoToPreviousDiagnostic",
+      "space e e": "diagnostics::Deploy",
       // ---- Code Actions
       "space c r": "editor::Rename",
       "space c f": "editor::Format",
       "space c t": "editor::ToggleFold",
+      "space c h": "editor::ToggleInlayHints",
+
+      "space h": "editor::SwitchSourceHeader",
       // ---- Navigation
       "space c d": "editor::GoToDefinitionSplit", // Open the definition in Right Pane
       // GIT
       // ----
-      "space g b t": "editor::ToggleGitBlame", // Toggle git blame in file
+      //"space g b t": "editor::ToggleGitBlame", // Toggle git blame in file
       "space g b l": "editor::ToggleGitBlameInline", // Toggle git blame inline
       "space g g": ["task::Spawn", { "task_name": "LazyGit" }],
       // TASK
@@ -108,11 +113,19 @@
     }
   },
   {
-    "context": "EmptyPane || SharedScreen",
+    "context": "EmptyPane || SharedScreen || MarkdownPreview",
     "bindings": {
       // Put key bindings here (in addition to the context above) if you want them to
       // work when no editor exists.
-      "space f": "file_finder::Toggle"
+      "space f f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "MarkdownPreview", // Markdow support
+    "bindings": {
+      "space q": "pane::CloseActiveItem",
+      "shift-l": "pane::ActivateNextItem",
+      "shift-h": "pane::ActivatePreviousItem"
     }
   },
   {
@@ -135,7 +148,23 @@
       "r": "project_panel::Rename",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
-      "x": "project_panel::Cut"
+      "x": "project_panel::Cut",
+      "q": "workspace::ToggleLeftDock"
+    }
+  },
+  // DISABLE TAB in insert mode to avoid accept prediction
+  {
+    "context": "Editor && vim_mode == insert && edit_prediction && copilot_suggestion",
+    "bindings": {
+      "tab": "editor::Tab"
+    }
+  },
+  // TYPING CONTEXT
+  {
+    "context": "Editor && vim_mode==insert && !VimWaiting && !menu",
+    "bindings": {
+      "ctrl-i": "copilot::Suggest",
+      "ctrl-y": "editor::AcceptEditPrediction"
     }
   },
   {
@@ -154,7 +183,7 @@
       // TABS
       // --- Movement
       "ctrl-shift-l": "pane::ActivateNextItem",
-      "ctrl-shift-h": "pane::ActivatePrevItem"
+      "ctrl-shift-h": "pane::ActivatePreviousItem"
     }
   }
 ]

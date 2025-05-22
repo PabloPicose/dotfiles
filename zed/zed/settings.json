@@ -7,22 +7,23 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "assistant": {
+  "agent": {
     "version": "2",
-    "enabled": false
-    // "default_model": {
-    //   "provider": "copilot_chat",
-    //   "model": "gpt-4o"
-    // },
-    // "version": "2"
+    "enabled": false,
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4o"
+    }
   },
+  "autosave": "on_focus_change",
+  //"tab_size": 2,
+  "show_edit_predictions": false, // Disable inline predictions from Copilot or other provider
   "features": {
     //"edit_prediction_provider": "zed"
-    "edit_prediction_provider": "none",
-    "copilot": false
+    "edit_prediction_provider": "copilot"
   },
   "icon_theme": "Catppuccin Latte",
-  "theme": "Catppuccin Mocha",
+  "theme": "Catppuccin Macchiato",
   "vim_mode": true,
   "vim": {
     "use_system_clipboard": "always"
@@ -40,5 +41,16 @@
   },
   "file_types": {
     "CMake": ["CMakeLists.txt"]
+  },
+  "lsp": {
+    "clangd": {
+      "binary": {
+        "path": "/usr/bin/clangd-20",
+        "arguments": [
+          "--query-driver=/usr/bin/c++,/usr/bin/gcc-*,/usr/bin/g++-*",
+          "--header-insertion=never"
+        ]
+      }
+    }
   }
 }
