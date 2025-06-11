@@ -223,6 +223,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Set some types of files to be treated as a 'ini' files
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.service', '*.socket', '*.timer', '*.path', '*.mount', '*.target' },
+  callback = function()
+    vim.bo.filetype = 'dosini'
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -356,6 +364,8 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle', mode = { 'n', 'v' } },
         { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
         { '<leader>c', group = '[C]ode', mode = { 'n', 'v' } },
+        { '<leader>b', group = '[B]uffer', mode = { 'n', 'v' } },
+        { '<leader>f', group = '[F]ind/File', mode = { 'n', 'v' } },
         -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -505,6 +515,7 @@ require('lazy').setup({
       'saghen/blink.cmp',
     },
     config = function()
+      vim.lsp.enable 'qmlls'
       -- Brief aside: **What is LSP?**
       --
       -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -687,6 +698,7 @@ require('lazy').setup({
           cmd = {
             'clangd',
             '--header-insertion=never',
+            '--query-driver=/usr/bin/g++',
           },
         },
         -- gopls = {},
@@ -1001,7 +1013,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!

@@ -24,6 +24,8 @@
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
+      // TEST
+      "space t x": ["workspace::SendKeystrokes", "shift-l shift-l"],
       // PANE
       // ---- Navigation
       "ctrl-l": "workspace::ActivatePaneRight",
@@ -41,10 +43,12 @@
       "space t t": "workspace::ToggleBottomDock", // Toggle the terminal
       // TAB
       // ---- Management
-      "space q": "pane::CloseActiveItem", // Close the current tab
-      "space w r": "pane::ReopenClosedItem", // Reopen closed tab
-      "space w c": "pane::CloseInactiveItems", // Close all tabs except the current one
-      "space w C": "pane::CloseAllItems", // Close all tabs in the current pane
+      "space b d": "pane::CloseActiveItem", // Close the current tab
+      "space b R": "pane::ReopenClosedItem", // Reopen closed tab
+      "space b l": ["pane::CloseItemsToTheLeft", { "close_pinned": false }],
+      "space b r": ["pane::CloseItemsToTheRight", { "close_pinned": false }],
+      "space b D": "pane::CloseInactiveItems", // Close all tabs except the current one
+      "space b C": "pane::CloseAllItems", // Close all tabs in the current pane
       // ---- Navigation
       "shift-l": "pane::ActivateNextItem",
       "shift-h": "pane::ActivatePreviousItem",
@@ -74,8 +78,9 @@
       // GIT
       // ----
       //"space g b t": "editor::ToggleGitBlame", // Toggle git blame in file
-      "space g b l": "editor::ToggleGitBlameInline", // Toggle git blame inline
+      "space g b": "editor::ToggleGitBlameInline", // Toggle git blame inline
       "space g g": ["task::Spawn", { "task_name": "LazyGit" }],
+      "space g v": ["task::Spawn", { "task_name": "GitGraph" }],
       // TASK
       //---- Execute Task
       "space t r": "task::Spawn",
@@ -99,7 +104,9 @@
         {
           "task_name": "ConfigureCurrentTarget"
         }
-      ]
+      ],
+      // DEBUG
+      "space d t": "editor::ToggleBreakpoint"
     }
   },
   {
@@ -143,6 +150,7 @@
     "context": "ProjectPanel && not_editing",
     "bindings": {
       "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
       "d": "project_panel::Delete",
       "D": ["project_panel::Delete", { "skip_prompt": true }],
       "r": "project_panel::Rename",

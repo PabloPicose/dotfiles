@@ -31,5 +31,11 @@
     "command": "lazygit",
     "reveal_target": "center",
     "hide": "on_success"
+  },
+  {
+    "label": "GitGraph",
+    "command": "tig",
+    "reveal_target": "center",
+    "hide": "on_success"
   }
 ]
