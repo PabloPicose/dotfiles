@@ -38,5 +38,7 @@ return {
       end,
     })
   end,
-  opts = {},
+  opts = {
+    cmake_regenerate_on_save = false,
+  },
 }
