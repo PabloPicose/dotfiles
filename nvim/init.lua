@@ -182,51 +182,12 @@ vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', { silent = true, desc = 'Resiz
 vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', { silent = true, desc = 'Resize window left' })
 vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', { silent = true, desc = 'Resize window right' })
 
--- Smart buffer delete that keeps the window open
-vim.keymap.set('n', '<leader>bd', function()
-  local cur_buf = vim.api.nvim_get_current_buf()
-  local alt_buf = vim.fn.bufnr '#'
-
-  -- Use alternate buffer if valid and listed
-  if alt_buf > 0 and vim.fn.buflisted(alt_buf) == 1 then
-    vim.cmd('buffer ' .. alt_buf)
-  else
-    vim.cmd 'enew' -- fallback to a new empty buffer
-  end
-
-  vim.cmd('bdelete ' .. cur_buf)
-end, { desc = 'Smart buffer delete' })
-
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Automatically source all Lua files in `lua/custom/autocmd/`
-local autocmd_path = vim.fn.stdpath 'config' .. '/lua/custom/autocmd'
-local files = vim.fn.globpath(autocmd_path, '*.lua', false, true)
-for _, file in ipairs(files) do
-  local mod = file:match('lua/(.+)%.lua$'):gsub('/', '.')
-  pcall(require, mod)
-end
-
--- 2) Swap buffers between two windows
-local function swap_two_windows_bufs()
-  local wins = vim.api.nvim_tabpage_list_wins(0)
-  if #wins ~= 2 then
-    vim.notify('Buffer-swap needs exactly two windows', vim.log.levels.WARN)
-    return
-  end
-  local w1, w2 = wins[1], wins[2]
-  local b1 = vim.api.nvim_win_get_buf(w1)
-  local b2 = vim.api.nvim_win_get_buf(w2)
-  -- swap them
-  vim.api.nvim_win_set_buf(w1, b2)
-  vim.api.nvim_win_set_buf(w2, b1)
-end
-vim.keymap.set('n', '<leader>cs', swap_two_windows_bufs, { desc = 'Swap Buffers (2 wins)' })
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
@@ -830,6 +791,17 @@ require('lazy').setup({
     },
   },
 })
+
+local function load_folder(subdir)
+  local path = vim.fn.stdpath 'config' .. '/lua/custom/' .. subdir
+  for _, f in ipairs(vim.fn.globpath(path, '*.lua', false, true)) do
+    local mod = f:match('lua/(.+)%.lua$'):gsub('/', '.')
+    pcall(require, mod)
+  end
+end
+
+load_folder 'autocmd'
+load_folder 'keybinds'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
