@@ -169,6 +169,34 @@ vim.o.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Jump to next/previous buffer
+vim.keymap.set('n', '<leader>bn', ':bnext<CR>', { silent = true, desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', ':bprevious<CR>', { silent = true, desc = 'Previous buffer' })
+
+-- Switch to last used buffer (very useful!)
+vim.keymap.set('n', '<leader>bo', '<C-^>', { desc = 'Alternate buffer' })
+
+-- Resize splits with Ctrl + Arrow
+vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', { silent = true, desc = 'Resize window up' })
+vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', { silent = true, desc = 'Resize window down' })
+vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', { silent = true, desc = 'Resize window left' })
+vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', { silent = true, desc = 'Resize window right' })
+
+-- Smart buffer delete that keeps the window open
+vim.keymap.set('n', '<leader>bd', function()
+  local cur_buf = vim.api.nvim_get_current_buf()
+  local alt_buf = vim.fn.bufnr '#'
+
+  -- Use alternate buffer if valid and listed
+  if alt_buf > 0 and vim.fn.buflisted(alt_buf) == 1 then
+    vim.cmd('buffer ' .. alt_buf)
+  else
+    vim.cmd 'enew' -- fallback to a new empty buffer
+  end
+
+  vim.cmd('bdelete ' .. cur_buf)
+end, { desc = 'Smart buffer delete' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -176,10 +204,14 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
+-- Automatically source all Lua files in `lua/custom/autocmd/`
+local autocmd_path = vim.fn.stdpath 'config' .. '/lua/custom/autocmd'
+local files = vim.fn.globpath(autocmd_path, '*.lua', false, true)
+for _, file in ipairs(files) do
+  local mod = file:match('lua/(.+)%.lua$'):gsub('/', '.')
+  pcall(require, mod)
+end
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -366,7 +398,7 @@ require('lazy').setup({
         { '<leader>c', group = '[C]ode', mode = { 'n', 'v' } },
         { '<leader>b', group = '[B]uffer', mode = { 'n', 'v' } },
         { '<leader>f', group = '[F]ind/File', mode = { 'n', 'v' } },
-        -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>d', group = '[D]ebug', mode = { 'n' } },
       },
     },
   },
