@@ -212,6 +212,22 @@ for _, file in ipairs(files) do
   pcall(require, mod)
 end
 
+-- 2) Swap buffers between two windows
+local function swap_two_windows_bufs()
+  local wins = vim.api.nvim_tabpage_list_wins(0)
+  if #wins ~= 2 then
+    vim.notify('Buffer-swap needs exactly two windows', vim.log.levels.WARN)
+    return
+  end
+  local w1, w2 = wins[1], wins[2]
+  local b1 = vim.api.nvim_win_get_buf(w1)
+  local b2 = vim.api.nvim_win_get_buf(w2)
+  -- swap them
+  vim.api.nvim_win_set_buf(w1, b2)
+  vim.api.nvim_win_set_buf(w2, b1)
+end
+vim.keymap.set('n', '<leader>cs', swap_two_windows_bufs, { desc = 'Swap Buffers (2 wins)' })
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
