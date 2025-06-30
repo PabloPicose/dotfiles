@@ -548,6 +548,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         json = { 'jq' },
         cpp = { 'clang_format' },
+        markdown = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

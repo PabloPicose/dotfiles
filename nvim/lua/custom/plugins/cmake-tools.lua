@@ -40,5 +40,11 @@ return {
   end,
   opts = {
     cmake_regenerate_on_save = false,
+    cmake_executor = {
+      name = 'quickfix',
+      opts = {
+        auto_close_when_success = false, -- ← This keeps the window open
+      },
+    },
   },
 }

@@ -104,6 +104,11 @@ return {
         end,
         desc = '[E]valuate Expression',
       },
+      {
+        '<leader>dv', -- call DapVirtualTextToggle
+        '<cmd>DapVirtualTextToggle<CR>',
+        desc = '[V]irtual Text Toggle',
+      },
     },
   },
 }
