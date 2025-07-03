@@ -558,6 +558,13 @@ require('lazy').setup({
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
+      formatters = {
+        clang_format = {
+          command = 'clang-format-20',
+          -- puedes agregar args si quieres usar un archivo .clang-format personalizado
+          -- args = { "--style=file" },
+        },
+      },
     },
   },
 

@@ -8,7 +8,7 @@ return {
     { 'mason-org/mason.nvim', opts = {} },
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-
+    'b0o/schemastore.nvim',
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
 
@@ -24,6 +24,7 @@ return {
 
     -- Configuración directa de clangd, sin Mason
     local lspconfig = require 'lspconfig'
+    local schemastore = require 'schemastore'
     lspconfig.clangd.setup {
       cmd = {
         'clangd-20',
@@ -37,6 +38,15 @@ return {
       end,
       capabilities = capabilities,
       filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+    }
+
+    lspconfig.jsonls.setup {
+      settings = {
+        json = {
+          schemas = schemastore.json.schemas(), -- Auto-incluye más de 1000 esquemas
+          validate = { enable = true },
+        },
+      },
     }
     -- vim.lsp.enable 'qmlls'
     -- Brief aside: **What is LSP?**
@@ -254,6 +264,7 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
+      'json-lsp',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
