@@ -549,6 +549,9 @@ require('lazy').setup({
         json = { 'jq' },
         cpp = { 'clang_format' },
         markdown = { 'prettier' },
+        cmake = { 'cmake_format' },
+        -- requires executable xmllint (sudo apt install libxml2-utils)
+        xml = { 'xmllint' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

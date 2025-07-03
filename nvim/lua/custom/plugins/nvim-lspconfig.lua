@@ -16,6 +16,23 @@ return {
     'saghen/blink.cmp',
   },
   config = function()
+    local lspconfig = require 'lspconfig'
+
+    -- Configuración directa de clangd, sin Mason
+    lspconfig.clangd.setup {
+      cmd = {
+        'clangd-20',
+        '--header-insertion=never',
+        -- '--header-insertion-decorators=0',
+      },
+      on_attach = function(client, bufnr)
+        -- tus keymaps personalizados, por ejemplo:
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr })
+      end,
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+    }
+
     vim.lsp.enable 'qmlls'
     -- Brief aside: **What is LSP?**
     --
@@ -195,15 +212,14 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      clangd = {
-        cmd = {
-          -- 'clangd',
-          -- '--header-insertion=never',
-          -- '--log=verbose',
-          -- '--pretty',
-          -- '--query-driver=/usr/bin/g++',
-        },
-      },
+      -- clangd = {
+      -- cmd = {
+      -- vim.fn.stdpath 'data' .. '/mason/bin/clangd --header-insertion=never',
+      -- vim.fn.stdpath 'data' .. '/mason/bin/clangd',
+      -- '--header-insertion=never',
+      -- '--header-insertion-decorators=0',
+      -- },
+      -- },
       -- gopls = {},
       -- pyright = {},
       -- rust_analyzer = {},
