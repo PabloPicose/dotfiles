@@ -16,9 +16,14 @@ return {
     'saghen/blink.cmp',
   },
   config = function()
-    local lspconfig = require 'lspconfig'
+    -- LSP servers and clients are able to communicate to each other what features they support.
+    --  By default, Neovim doesn't support everything that is in the LSP specification.
+    --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
+    --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
+    local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     -- Configuración directa de clangd, sin Mason
+    local lspconfig = require 'lspconfig'
     lspconfig.clangd.setup {
       cmd = {
         'clangd-20',
@@ -30,10 +35,10 @@ return {
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr })
       end,
-      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      capabilities = capabilities,
+      filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
     }
-
-    vim.lsp.enable 'qmlls'
+    -- vim.lsp.enable 'qmlls'
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -196,12 +201,6 @@ return {
       },
     }
 
-    -- LSP servers and clients are able to communicate to each other what features they support.
-    --  By default, Neovim doesn't support everything that is in the LSP specification.
-    --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
-    --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
-    local capabilities = require('blink.cmp').get_lsp_capabilities()
-
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -212,14 +211,6 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      -- clangd = {
-      -- cmd = {
-      -- vim.fn.stdpath 'data' .. '/mason/bin/clangd --header-insertion=never',
-      -- vim.fn.stdpath 'data' .. '/mason/bin/clangd',
-      -- '--header-insertion=never',
-      -- '--header-insertion-decorators=0',
-      -- },
-      -- },
       -- gopls = {},
       -- pyright = {},
       -- rust_analyzer = {},
@@ -231,7 +222,6 @@ return {
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       -- ts_ls = {},
       --
-
       lua_ls = {
         -- cmd = { ... },
         -- filetypes = { ... },
