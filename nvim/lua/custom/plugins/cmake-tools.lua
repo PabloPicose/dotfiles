@@ -40,10 +40,16 @@ return {
   end,
   opts = {
     cmake_regenerate_on_save = false,
-    cmake_executor = {
+    cmake_executor = { -- build and throw the messages to the quickfix/terminal
       name = 'quickfix',
       opts = {
         auto_close_when_success = false, -- ← This keeps the window open
+      },
+    },
+    cmake_runner = {
+      name = 'quickfix',
+      opts = {
+        auto_close_when_success = false,
       },
     },
   },
