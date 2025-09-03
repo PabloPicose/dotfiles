@@ -31,13 +31,19 @@ return {
       dapui.setup()
 
       dap.listeners.after.event_initialized['dapui_config'] = function()
+        -- vim.notify('DAP iniciado 🚀', vim.log.levels.INFO)
         dapui.open()
+        -- disable virtual text by default
+        local dapvtext = require 'nvim-dap-virtual-text'
+        dapvtext.disable()
       end
       dap.listeners.before.event_terminated['dapui_config'] = function()
-        dapui.close()
+        -- vim.notify('DAP terminado 🛑', vim.log.levels.INFO)
+        -- dapui.close()
       end
       dap.listeners.before.event_exited['dapui_config'] = function()
-        dapui.close()
+        -- vim.notify('DAP salió 👋', vim.log.levels.INFO)
+        -- dapui.close()
       end
     end,
     keys = {
@@ -86,7 +92,15 @@ return {
       {
         '<leader>ds',
         function()
-          require('dap').close()
+          local dap = require 'dap'
+          dap.close()
+          local dapui = require 'dapui'
+          -- disable virtual text and UI
+          dapui.close()
+          local dapvtext = require 'nvim-dap-virtual-text'
+          if dapvtext.is_enabled() then
+            dapvtext.disable()
+          end
         end,
         desc = '[S]top debugging',
       },

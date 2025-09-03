@@ -90,6 +90,18 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+if vim.g.vscode then
+  vim.schedule(function()
+    vim.o.clipboard = 'unnamedplus'
+  end)
+
+  vim.o.ignorecase = true
+  vim.o.smartcase = true
+  vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+  return
+end
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -215,9 +227,6 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 vim.keymap.set('n', '<leader>ch', '<cmd>ClangdSwitchSourceHeader<CR>', { desc = '[C]ode switch [H]eader/source' })
-vim.keymap.set('n', '<leader>td', function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = '[T]oggle [D]iagnostics' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

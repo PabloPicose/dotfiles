@@ -2,7 +2,7 @@ local function genKeys()
   local wk = require 'which-key'
   wk.add {
     -- { '<leader>e', '<cmd>Neotree<cr>', desc = 'Open TreeFile', mode = 'n' },
-    { '<leader>cm', '<cmd>CMake<CR>', desc = 'CMake', mode = 'n' },
+    { '<leader>cm', desc = 'CMake', mode = 'n' }, -- group
     { '<leader>cmg', '<cmd>CMakeGenerate<CR>', desc = 'Generate CMake configuration', mode = 'n' },
     { '<leader>cmb', '<cmd>CMakeBuild<CR>', desc = 'Build CMake configuration', mode = 'n' },
     { '<leader>cmr', '<cmd>CMakeRun<CR>', desc = 'Run current target', mode = 'n' },
@@ -12,7 +12,9 @@ local function genKeys()
     { '<leader>cmp', '<cmd>CMakeSelectConfigurePreset<CR>', desc = 'Select configure preset', mode = 'n' },
     { '<leader>cmd', '<cmd>CMakeDebug<CR>', desc = 'Debug target', mode = 'n' },
     { '<leader>cmt', '<cmd>CMakeStopRunner<CR>', desc = 'Stop running program', mode = 'n' },
-    { '<leader>cmc', '<cmd>CMakeStopRunner<CR>', desc = 'Stop running program', mode = 'n' },
+    { '<leader>cmo', desc = '[O]pen logs', mode = 'n' }, -- group
+    { '<leader>cmob', '<cmob>CMakeOpenExecutor<CR>', desc = '[B]uild logs', mode = 'n' },
+    { '<leader>cmor', '<cmor>CMakeOpenExecutor<CR>', desc = '[R]unner logs', mode = 'n' },
   }
 end
 
@@ -43,13 +45,17 @@ return {
     cmake_executor = { -- build and throw the messages to the quickfix/terminal
       name = 'quickfix',
       opts = {
-        auto_close_when_success = false, -- ← This keeps the window open
+        -- Quickfix can be reopen with ':copen' command
+        auto_close_when_success = true, -- ← This keeps the window open
       },
     },
     cmake_runner = {
-      name = 'quickfix',
+      name = 'terminal',
+      -- name = 'quickfix',
       opts = {
         auto_close_when_success = false,
+        focus = false,
+        -- close_on_exit = false,
       },
     },
   },
