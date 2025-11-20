@@ -46,7 +46,7 @@ return {
       name = 'quickfix',
       opts = {
         -- Quickfix can be reopen with ':copen' command
-        auto_close_when_success = true, -- ← This keeps the window open
+        auto_close_when_success = false, -- ← This keeps the window open
       },
     },
     cmake_runner = {
