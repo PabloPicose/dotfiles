@@ -8,7 +8,7 @@ return {
     { 'mason-org/mason.nvim', opts = {} },
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    'b0o/schemastore.nvim',
+
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
 
@@ -16,39 +16,11 @@ return {
     'saghen/blink.cmp',
   },
   config = function()
-    -- LSP servers and clients are able to communicate to each other what features they support.
-    --  By default, Neovim doesn't support everything that is in the LSP specification.
-    --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
-    --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
-    local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-    -- Configuración directa de clangd, sin Mason
-    local lspconfig = require 'lspconfig'
-    local schemastore = require 'schemastore'
-    lspconfig.clangd.setup {
-      cmd = {
-        'clangd-20',
-        '--header-insertion=never',
-        -- '--header-insertion-decorators=0',
-      },
-      on_attach = function(client, bufnr)
-        -- tus keymaps personalizados, por ejemplo:
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr })
-      end,
-      capabilities = capabilities,
-      filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+    vim.lsp.config['clangd'] = {
+      cmd = { 'clangd-20', '--header-insertion=never' },
+      filetypes = { 'c', 'cpp', 'h', 'hpp' },
     }
-
-    lspconfig.jsonls.setup {
-      settings = {
-        json = {
-          schemas = schemastore.json.schemas(), -- Auto-incluye más de 1000 esquemas
-          validate = { enable = true },
-        },
-      },
-    }
-    -- vim.lsp.enable 'qmlls'
+    vim.lsp.enable 'clangd'
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -177,7 +149,7 @@ return {
         if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
           map('<leader>th', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-          end, 'Toggle Inlay [H]ints')
+          end, '[T]oggle Inlay [H]ints')
         end
       end,
     })
@@ -211,6 +183,12 @@ return {
       },
     }
 
+    -- LSP servers and clients are able to communicate to each other what features they support.
+    --  By default, Neovim doesn't support everything that is in the LSP specification.
+    --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
+    --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
+    local capabilities = require('blink.cmp').get_lsp_capabilities()
+
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -221,6 +199,7 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
+      -- clangd = {},
       -- gopls = {},
       -- pyright = {},
       -- rust_analyzer = {},
@@ -232,6 +211,7 @@ return {
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       -- ts_ls = {},
       --
+
       lua_ls = {
         -- cmd = { ... },
         -- filetypes = { ... },
