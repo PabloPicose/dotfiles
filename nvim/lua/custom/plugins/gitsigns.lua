@@ -1,19 +1,3 @@
-local function genKeys()
-  local wk = require 'which-key'
-  local gs = require 'gitsigns'
-  wk.add {
-
-    {
-      '<leader>gn',
-      function()
-        gs.nav_hunk 'next'
-      end,
-      desc = 'Generate CMake configuration',
-      mode = 'n',
-    },
-  }
-end
-
 return {
   'lewis6991/gitsigns.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
