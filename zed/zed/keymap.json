@@ -7,7 +7,7 @@
 // from the command palette.
 [
   {
-    "context": "Workspace",
+    "context": "Workspace && !Terminal",
     "bindings": {
       // "shift shift": "file_finder::Toggle"
       //"space f": "file_finder::Toggle"
@@ -18,12 +18,26 @@
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
       "alt-q": "pane::CloseActiveItem",
-      "alt-m": "zed::ToggleFullScreen"
-    }
+      "alt-m": "zed::ToggleFullScreen",
+    },
+  },
+  // Outline panel - Left symbol view panel
+  {
+    "context": "OutlinePanel",
+    "bindings": {
+      "ctrl-left": "vim::ResizePaneLeft",
+      "ctrl-right": "vim::ResizePaneRight",
+    },
+  },
+  // TEST
+  {
+    "context": "Editor && vim_mode",
+    "bindings": {},
   },
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
+      "space": null,
       // TEST
       "space t x": ["workspace::SendKeystrokes", "shift-l shift-l"],
       // PANE
@@ -47,7 +61,7 @@
       "space b R": "pane::ReopenClosedItem", // Reopen closed tab
       "space b l": ["pane::CloseItemsToTheLeft", { "close_pinned": false }],
       "space b r": ["pane::CloseItemsToTheRight", { "close_pinned": false }],
-      "space b D": "pane::CloseInactiveItems", // Close all tabs except the current one
+      "space b D": "pane::CloseOtherItems", // Close all tabs except the current one
       "space b C": "pane::CloseAllItems", // Close all tabs in the current pane
       // ---- Navigation
       "shift-l": "pane::ActivateNextItem",
@@ -90,24 +104,24 @@
         "task::Spawn",
         {
           "task_name": "SelectCurrentBuild",
-          "reveal_target": "center"
-        }
+          "reveal_target": "center",
+        },
       ],
       "space c m r": [
         "task::Spawn",
         {
-          "task_name": "RunCurrentTarget"
-        }
+          "task_name": "RunCurrentTarget",
+        },
       ],
       "space c m g": [
         "task::Spawn",
         {
-          "task_name": "ConfigureCurrentTarget"
-        }
+          "task_name": "ConfigureCurrentTarget",
+        },
       ],
       // DEBUG
-      "space d t": "editor::ToggleBreakpoint"
-    }
+      "space d t": "editor::ToggleBreakpoint",
+    },
   },
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !menu",
@@ -116,24 +130,24 @@
       "ctrl-shift-j": "editor::MoveLineDown",
       "ctrl-shift-k": "editor::MoveLineUp",
       // Format selection
-      "space c f": "editor::FormatSelections"
-    }
+      "space c f": "editor::FormatSelections",
+    },
   },
   {
     "context": "EmptyPane || SharedScreen || MarkdownPreview",
     "bindings": {
       // Put key bindings here (in addition to the context above) if you want them to
       // work when no editor exists.
-      "space f f": "file_finder::Toggle"
-    }
+      "space f f": "file_finder::Toggle",
+    },
   },
   {
     "context": "MarkdownPreview", // Markdow support
     "bindings": {
       "space q": "pane::CloseActiveItem",
       "shift-l": "pane::ActivateNextItem",
-      "shift-h": "pane::ActivatePreviousItem"
-    }
+      "shift-h": "pane::ActivatePreviousItem",
+    },
   },
   {
     "context": "Dock",
@@ -143,7 +157,7 @@
       //"ctrl-w k": "workspace::ActivatePaneUp",
       //"ctrl-w j": "workspace::ActivatePaneDown"
       // ... or other keybindings
-    }
+    },
   },
   {
     // TREE CONTEXT
@@ -157,23 +171,24 @@
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "x": "project_panel::Cut",
-      "q": "workspace::ToggleLeftDock"
-    }
+      "q": "workspace::ToggleLeftDock",
+      "s": "project_panel::OpenSplitVertical",
+    },
   },
   // DISABLE TAB in insert mode to avoid accept prediction
   {
     "context": "Editor && vim_mode == insert && edit_prediction && copilot_suggestion",
     "bindings": {
-      "tab": "editor::Tab"
-    }
+      "tab": "editor::Tab",
+    },
   },
   // TYPING CONTEXT
   {
     "context": "Editor && vim_mode==insert && !VimWaiting && !menu",
     "bindings": {
       "ctrl-i": "copilot::Suggest",
-      "ctrl-y": "editor::AcceptEditPrediction"
-    }
+      "ctrl-y": "editor::AcceptEditPrediction",
+    },
   },
   {
     // TERMINAL CONTEXT
@@ -191,7 +206,8 @@
       // TABS
       // --- Movement
       "ctrl-shift-l": "pane::ActivateNextItem",
-      "ctrl-shift-h": "pane::ActivatePreviousItem"
-    }
-  }
+      "ctrl-shift-h": "pane::ActivatePreviousItem",
+      "ctrl-k": "workspace::ActivatePaneUp",
+    },
+  },
 ]

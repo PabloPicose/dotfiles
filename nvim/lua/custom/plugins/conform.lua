@@ -70,6 +70,9 @@ return { -- Autoformat
         -- puedes agregar args si quieres usar un archivo .clang-format personalizado
         -- args = { "--style=file" },
       },
+      jq = {
+        args = { '--indent', '2' },
+      },
     },
   },
 }

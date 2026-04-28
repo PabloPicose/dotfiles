@@ -7,53 +7,94 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "debugger": {
-    "dock": "right"
+  "edit_predictions": {
+    "provider": "copilot"
   },
   "agent": {
-    "version": "2",
-    "enabled": false,
+    "default_profile": "ask",
     "default_model": {
+      "effort": "high",
       "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "model": "gpt-5.4",
+      "enable_thinking": false
+    },
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry"
     }
   },
+  "ssh_connections": [
+    {
+      "host": "indra",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/ppicos/dev/ARCOS300/Arcos300m"
+          ]
+        },
+        {
+          "paths": [
+            "/home/ppicos/dev/NexusNodeFramework/./"
+          ]
+        },
+        {
+          "paths": [
+            "/home/ppicos/dev/Ot/./"
+          ]
+        },
+        {
+          "paths": [
+            "/home/ppicos/dev/proradsim_cpp"
+          ]
+        }
+      ]
+    }
+  ],
+  "debugger": {
+    "dock": "right",
+  },
+  "which_key": {
+    "enabled": true,
+    "delay_ms": 10,
+  },
   "autosave": "on_focus_change",
+  "session": {
+    "trust_all_worktrees": true,
+  },
   //"tab_size": 2,
   "show_edit_predictions": false, // Disable inline predictions from Copilot or other provider
-  "features": {
-    //"edit_prediction_provider": "zed"
-    "edit_prediction_provider": "copilot"
-  },
-  "icon_theme": "Catppuccin Latte",
   "theme": "Catppuccin Macchiato",
   "vim_mode": true,
   "vim": {
-    "use_system_clipboard": "always"
+    "use_system_clipboard": "always",
   },
   "inlay_hints": {
-    "enabled": false // Shows in 'grey' the function type arguments
+    "enabled": false, // Shows in 'grey' the function type arguments
   },
   "buffer_font_size": 16.0,
   //"buffer_font_family": "JetBrainsMono Nerd Font",
   "cursor_blink": false,
   "git": {
     "inline_blame": {
-      "enabled": false
-    }
+      "enabled": false,
+    },
   },
   "file_types": {
-    "CMake": ["CMakeLists.txt"]
+    "CMake": ["CMakeLists.txt"],
   },
-  "lsp": {
-    "clangd": {
-      "binary": {
-        "path": "/usr/bin/clangd-20",
-        "arguments": [
-          "--query-driver=/usr/bin/c++,/usr/bin/gcc-*,/usr/bin/g++-*",
-          "--header-insertion=never"
-        ]
-      }
-    }
-  }
+  // "lsp": {
+  //   "clangd": {
+  //     "binary": {
+  //       "path": "/usr/bin/clangd-20",
+  //       "arguments": [
+  //         "--query-driver=/usr/bin/c++,/usr/bin/gcc-*,/usr/bin/g++-*",
+  //         "--header-insertion=never",
+  //       ],
+  //     },
+  //   },
+  // },
 }

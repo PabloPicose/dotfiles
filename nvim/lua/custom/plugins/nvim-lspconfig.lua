@@ -17,7 +17,11 @@ return {
   },
   config = function()
     vim.lsp.config['clangd'] = {
-      cmd = { 'clangd-20', '--header-insertion=never' },
+      cmd = {
+        'clangd-20',
+        '--header-insertion=never',
+        '--query-driver=/home/ppicos/dev/emsdk/upstream/emscripten/em++,/home/ppicos/dev/emsdk/upstream/emscripten/emcc,/usr/bin/clang++,/usr/bin/g++',
+      },
       filetypes = { 'c', 'cpp', 'h', 'hpp' },
     }
     vim.lsp.enable 'clangd'

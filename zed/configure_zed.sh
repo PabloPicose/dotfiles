@@ -1,3 +1,5 @@
 #!/bin/bash 
-mkdir -p ~/.config/zed
-cp -r ./zed ~/.config
+rm -rf ~/.config/zed
+# cp -r ./zed ~/.config
+# Create a symlink from here 
+ln -s "$(pwd)/zed" ~/.config/zed
