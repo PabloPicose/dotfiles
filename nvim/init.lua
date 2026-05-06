@@ -503,6 +503,37 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+
+      -- Search C++ headers: project dir + all -I paths from compile_commands.json
+      vim.keymap.set('n', '<leader>si', function()
+        local cwd = vim.fn.getcwd()
+        local dirs = { cwd }
+        local seen = { [cwd] = true }
+
+        local compile_commands = cwd .. '/compile_commands.json'
+        local f = io.open(compile_commands, 'r')
+        if f then
+          local content = f:read '*all'
+          f:close()
+          -- Match both -I/path and -I /path (with space)
+          for dir in content:gmatch '%-I%s*([^",%s\\]+)' do
+            -- Resolve relative paths
+            if not vim.startswith(dir, '/') then
+              dir = cwd .. '/' .. dir
+            end
+            if not seen[dir] and vim.fn.isdirectory(dir) == 1 then
+              seen[dir] = true
+              table.insert(dirs, dir)
+            end
+          end
+        end
+
+        builtin.find_files {
+          prompt_title = 'C++ Headers (' .. #dirs .. ' dirs)',
+          search_dirs = dirs,
+          find_command = { 'fdfind', '--type', 'f', '-e', 'h', '-e', 'hpp', '-e', 'hxx', '--follow' },
+        }
+      end, { desc = '[S]earch C++ [I]ncludes' })
     end,
   },
 

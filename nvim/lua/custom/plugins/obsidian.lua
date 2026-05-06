@@ -5,6 +5,7 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim' },
   opts = {
     legacy_commands = false,
+    ui = { enable = false }, -- disabled: render-markdown.nvim handles visual rendering
     link = {
       wiki = { use_name_only = true },
     },
