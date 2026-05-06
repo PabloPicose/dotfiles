@@ -13,8 +13,34 @@ local function genKeys()
     { '<leader>cmd', '<cmd>CMakeDebug<CR>', desc = 'Debug target', mode = 'n' },
     { '<leader>cmt', '<cmd>CMakeStopRunner<CR>', desc = 'Stop running program', mode = 'n' },
     { '<leader>cmo', desc = '[O]pen logs', mode = 'n' }, -- group
-    { '<leader>cmob', '<cmob>CMakeOpenExecutor<CR>', desc = '[B]uild logs', mode = 'n' },
-    { '<leader>cmor', '<cmor>CMakeOpenExecutor<CR>', desc = '[R]unner logs', mode = 'n' },
+    {
+      '<leader>cmob',
+      function()
+        local qf_winid = vim.fn.getqflist({ winid = 0 }).winid
+        if qf_winid ~= 0 then
+          vim.cmd 'cclose'
+        else
+          vim.cmd 'CMakeOpenExecutor'
+        end
+      end,
+      desc = 'Toggle [B]uild logs',
+      mode = 'n',
+    },
+    {
+      '<leader>cmor',
+      function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.api.nvim_buf_get_name(buf):match '%[CMakeTools%]' then
+            vim.api.nvim_win_close(win, false)
+            return
+          end
+        end
+        vim.cmd 'CMakeOpenRunner'
+      end,
+      desc = 'Toggle [R]unner logs',
+      mode = 'n',
+    },
   }
 end
 
@@ -45,17 +71,15 @@ return {
     cmake_executor = { -- build and throw the messages to the quickfix/terminal
       name = 'quickfix',
       opts = {
-        -- Quickfix can be reopen with ':copen' command
-        auto_close_when_success = false, -- ← This keeps the window open
+        -- Quickfix can be reopen with '<leader>cmob'
+        auto_close_when_success = true,
       },
     },
     cmake_runner = {
       name = 'terminal',
-      -- name = 'quickfix',
       opts = {
-        auto_close_when_success = false,
         focus = false,
-        -- close_on_exit = false,
+        close_on_exit = true,
       },
     },
   },
