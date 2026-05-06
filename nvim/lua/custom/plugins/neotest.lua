@@ -1,0 +1,51 @@
+return {
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'orjangj/neotest-ctest',
+    },
+    ft = { 'c', 'cpp' },
+    config = function()
+      require('neotest').setup {
+        adapters = {
+          require('neotest-ctest').setup {
+            build_dir = function()
+              local ok, cmake = pcall(require, 'cmake-tools')
+              if ok then return tostring(cmake.get_build_directory()) end
+              return vim.fn.getcwd() .. '/build'
+            end,
+            is_test_file = function(file_path)
+              local name = vim.fn.fnamemodify(file_path, ':t:r')
+              local ext  = vim.fn.fnamemodify(file_path, ':e')
+              if not vim.tbl_contains({ 'cpp', 'cc', 'cxx' }, ext) then return false end
+              return name:match('Tests?$') ~= nil
+                  or name:match('^[Tt]est') ~= nil
+                  or name:match('_test$') ~= nil
+            end,
+            dap_adapter = 'codelldb',
+          },
+        },
+        output      = { open_on_run = true },
+        summary     = { open = 'botright vsplit | vertical resize 40' },
+        output_panel = { open = 'botright split | resize 12' },
+      }
+    end,
+    keys = {
+      { '<leader>t',  '',                                                                  desc = '[T]ests' },
+      { '<leader>tt', function() require('neotest').run.run() end,                        desc = 'Run nearest test' },
+      { '<leader>tf', function() require('neotest').run.run(vim.fn.expand '%') end,       desc = 'Run tests in [F]ile' },
+      { '<leader>ta', function() require('neotest').run.run(vim.fn.getcwd()) end,          desc = 'Run [A]ll tests' },
+      { '<leader>tl', function() require('neotest').run.run_last() end,                    desc = 'Run [L]ast test again' },
+      { '<leader>ts', function() require('neotest').summary.toggle() end,                  desc = 'Toggle [S]ummary panel' },
+      { '<leader>to', function() require('neotest').output.open { enter = true } end,      desc = 'Open test [O]utput' },
+      { '<leader>tO', function() require('neotest').output_panel.toggle() end,             desc = 'Toggle [O]utput panel' },
+      { '<leader>tx', function() require('neotest').run.stop() end,                        desc = 'Stop running test' },
+      { '<leader>tw', function() require('neotest').watch.toggle(vim.fn.expand '%') end,  desc = 'Toggle [W]atch (rerun on save)' },
+      { '<leader>td', function() require('neotest').run.run { strategy = 'dap' } end,     desc = '[D]ebug nearest test' },
+    },
+  },
+}
