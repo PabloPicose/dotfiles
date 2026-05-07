@@ -664,6 +664,9 @@ require('lazy').setup({
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
+        on_highlights = function(hl, c)
+          hl['@keyword.type'] = { link = '@keyword' }
+        end,
       }
 
       -- Load the colorscheme here.
