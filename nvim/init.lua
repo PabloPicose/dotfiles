@@ -721,6 +721,10 @@ require('lazy').setup({
       require('nvim-treesitter.install').install(parsers, { with_sync = true })
     end,
     config = function()
+      -- Add runtime/ subdirectory to rtp so highlight queries are found
+      local ts_path = vim.fn.stdpath('data') .. '/lazy/nvim-treesitter'
+      vim.opt.rtp:prepend(ts_path .. '/runtime')
+
       local filetypes = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
