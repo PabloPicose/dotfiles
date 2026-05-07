@@ -22,7 +22,7 @@ return {
         '--header-insertion=never',
         '--query-driver=/home/ppicos/dev/emsdk/upstream/emscripten/em++,/home/ppicos/dev/emsdk/upstream/emscripten/emcc,/usr/bin/clang++,/usr/bin/g++',
       },
-      filetypes = { 'c', 'cpp', 'h', 'hpp' },
+      filetypes = { 'c', 'cpp' },
     }
     vim.lsp.enable 'clangd'
     -- Brief aside: **What is LSP?**

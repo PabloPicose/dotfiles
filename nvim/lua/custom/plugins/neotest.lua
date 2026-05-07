@@ -35,17 +35,17 @@ return {
       }
     end,
     keys = {
-      { '<leader>t',  '',                                                                  desc = '[T]ests' },
-      { '<leader>tt', function() require('neotest').run.run() end,                        desc = 'Run nearest test' },
-      { '<leader>tf', function() require('neotest').run.run(vim.fn.expand '%') end,       desc = 'Run tests in [F]ile' },
-      { '<leader>ta', function() require('neotest').run.run(vim.fn.getcwd()) end,          desc = 'Run [A]ll tests' },
-      { '<leader>tl', function() require('neotest').run.run_last() end,                    desc = 'Run [L]ast test again' },
-      { '<leader>ts', function() require('neotest').summary.toggle() end,                  desc = 'Toggle [S]ummary panel' },
-      { '<leader>to', function() require('neotest').output.open { enter = true } end,      desc = 'Open test [O]utput' },
-      { '<leader>tO', function() require('neotest').output_panel.toggle() end,             desc = 'Toggle [O]utput panel' },
-      { '<leader>tx', function() require('neotest').run.stop() end,                        desc = 'Stop running test' },
-      { '<leader>tw', function() require('neotest').watch.toggle(vim.fn.expand '%') end,  desc = 'Toggle [W]atch (rerun on save)' },
-      { '<leader>td', function() require('neotest').run.run { strategy = 'dap' } end,     desc = '[D]ebug nearest test' },
+      { '<leader>ct', desc = '[C]ode [T]ests', mode = 'n' }, -- group
+      { '<leader>ctt', function() require('neotest').run.run() end,                        desc = 'Run nearest test' },
+      { '<leader>ctf', function() require('neotest').run.run(vim.fn.expand '%') end,       desc = 'Run tests in [F]ile' },
+      { '<leader>cta', function() require('neotest').run.run(vim.fn.getcwd()) end,          desc = 'Run [A]ll tests' },
+      { '<leader>ctl', function() require('neotest').run.run_last() end,                    desc = 'Run [L]ast test again' },
+      { '<leader>cts', function() require('neotest').summary.toggle() end,                  desc = 'Toggle [S]ummary panel' },
+      { '<leader>cto', function() require('neotest').output.open { enter = true } end,      desc = 'Open test [O]utput' },
+      { '<leader>ctO', function() require('neotest').output_panel.toggle() end,             desc = 'Toggle [O]utput panel' },
+      { '<leader>ctx', function() require('neotest').run.stop() end,                        desc = 'Stop running test' },
+      { '<leader>ctw', function() require('neotest').watch.toggle(vim.fn.expand '%') end,  desc = 'Toggle [W]atch (rerun on save)' },
+      { '<leader>ctd', function() require('neotest').run.run { strategy = 'dap' } end,     desc = '[D]ebug nearest test' },
     },
   },
 }
