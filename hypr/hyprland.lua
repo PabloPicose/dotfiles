@@ -55,6 +55,11 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- NVIDIA: decodificación de vídeo por hardware (libva-nvidia-driver)
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 
+-- Apps Qt/KDE (Dolphin…) con el tema de Plasma (Breeze oscuro, iconos) como en KDE
+hl.env("QT_QPA_PLATFORMTHEME", "kde")
+-- Menú "Abrir con" de Dolphin (usa /etc/xdg/menus/plasma-applications.menu)
+hl.env("XDG_MENU_PREFIX", "plasma-")
+
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -141,6 +146,7 @@ hl.config({
         force_default_wallpaper = 0,    -- sin fondos anime
         disable_hyprland_logo   = true,
         disable_splash_rendering = true, -- quita el texto aleatorio de abajo ("Help I forgot to install kitty"...)
+        vrr = 2,                         -- VRR (G-Sync/FreeSync) solo en pantalla completa: juegos fluidos sin tearing
     },
 })
 
