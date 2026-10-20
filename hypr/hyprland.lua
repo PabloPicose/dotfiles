@@ -42,7 +42,7 @@ hl.on("hyprland.start", function ()
     -- Historial del portapapeles: guarda todo lo copiado (texto e imágenes)
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
-    -- Bloqueo y apagado de pantallas por inactividad (~/.config/hypr/hypridle.conf)
+    -- Apagar pantallas por inactividad (~/.config/hypr/hypridle.conf)
     hl.exec_cmd("hypridle")
 end)
 
@@ -195,10 +195,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- Salida de emergencia: cierra la sesión de Hyprland
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 
--- Bloquear pantalla: Hyper+Esc (Hyper = SUPER+CTRL+ALT+SHIFT, una tecla en el Moonlander)
-hl.bind("SUPER + CTRL + ALT + SHIFT + Escape", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
-
--- Menú de energía (bloquear / cerrar sesión / suspender / reiniciar / apagar)
+-- Menú de energía (cerrar sesión / suspender / reiniciar / apagar)
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
 
 -- Historial del portapapeles (SUPER+V ya es flotante)
