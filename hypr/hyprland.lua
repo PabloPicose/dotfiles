@@ -216,6 +216,10 @@ end
 -- Volver al escritorio anterior (como <C-^> en vim)
 hl.bind(mainMod .. " + Tab", hl.dsp.focus({ workspace = "previous" }))
 
+-- Escritorio anterior / siguiente del monitor actual (como [b / ]b en vim)
+hl.bind(mainMod .. " + bracketleft",  hl.dsp.focus({ workspace = "m-1" }))
+hl.bind(mainMod .. " + bracketright", hl.dsp.focus({ workspace = "m+1" }))
+
 -- Scratchpad
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
