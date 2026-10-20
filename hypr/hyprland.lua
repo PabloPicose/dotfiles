@@ -217,6 +217,10 @@ hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermen
 -- Buscador de ventanas: todas las ventanas abiertas en fuzzel (como Telescope buffers)
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/windows.sh"))
 
+-- Manual de atajos (manual.md): SUPER+A en nvim flotante (q sale) · SUPER+SHIFT+A buscar en fuzzel
+hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd("~/.config/hypr/scripts/atajos.sh"))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/atajos-buscar.sh"))
+
 -- Tecla líder para abrir apps (como <leader> en vim): SUPER+O y luego una letra.
 -- Sale sola del modo tras abrir la app ("reset"); Esc cancela. Waybar muestra "-- abrir --".
 hl.bind(mainMod .. " + O", hl.dsp.submap("abrir"))
@@ -361,6 +365,14 @@ hl.window_rule({
     name    = "steam-dp3",
     match   = { class = "^steam$" },   -- el cliente; los juegos (steam_app_*) van a DP-1 con la regla "juegos"
     monitor = "DP-3",
+})
+
+hl.window_rule({
+    name   = "atajos",                  -- manual de atajos (SUPER+A): flotante y centrado
+    match  = { class = "^atajos$" },
+    float  = true,
+    size   = "monitor_w*0.7 monitor_h*0.85",
+    center = true,
 })
 
 hl.window_rule({
