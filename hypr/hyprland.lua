@@ -44,6 +44,8 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     -- Apagar pantallas por inactividad (~/.config/hypr/hypridle.conf)
     hl.exec_cmd("hypridle")
+    -- Montar USB / discos al conectarlos (en KDE lo hace Plasma). Icono en la bandeja solo si hay alguno.
+    hl.exec_cmd("udiskie --automount --notify --smart-tray")
 end)
 
 
