@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-# Manual de atajos en kitty flotante con nvim (solo lectura, markdown renderizado). q para salir.
-# Si ya está abierto, lo enfoca en vez de abrir otro.
+# Manual de atajos en kitty flotante con nvim (solo lectura, markdown renderizado).
+# Interruptor: SUPER+A abre; otra vez SUPER+A (o q) cierra. Sin la confirmación de kitty al cerrar.
 manual=~/ai/hyperland/manual.md
-if hyprctl clients -j | jq -e 'any(.[]; .class == "atajos")' >/dev/null; then
-    hyprctl dispatch 'hl.dsp.focus({ window = "class:^(atajos)$" })'
+pid=$(hyprctl clients -j | jq -r 'first(.[] | select(.class == "atajos") | .pid) // empty')
+if [ -n "$pid" ]; then
+    kill "$pid"
 else
-    kitty --class atajos nvim -R -c 'setlocal nomodifiable' -c 'nnoremap <buffer> q <cmd>qa<CR>' "$manual"
+    kitty --class atajos -o confirm_os_window_close=0 \
+        nvim -R -c 'setlocal nomodifiable' -c 'nnoremap <buffer> q <cmd>qa<CR>' "$manual"
 fi
