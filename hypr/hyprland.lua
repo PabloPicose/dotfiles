@@ -138,6 +138,20 @@ hl.config({
     dwindle = {
         preserve_split = true,
     },
+    -- Master (solo en DP-1, ver regla de escritorio abajo): principal en el centro al 50 %
+    -- (también si está sola), el resto en columnas a los lados (con 1 sola extra, a la izquierda)
+    master = {
+        mfact = 0.5,
+        slave_count_for_center_master = 0,
+    },
+})
+
+-- DP-1 es ultrapanorámico (3440 px): layout master con la ventana principal en el centro.
+-- DP-2 y DP-3 siguen con dwindle.
+hl.workspace_rule({
+    workspace   = "m[DP-1]",
+    layout      = "master",
+    layout_opts = { orientation = "center" },
 })
 
 
@@ -199,6 +213,30 @@ hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 
 -- Menú de energía (cerrar sesión / suspender / reiniciar / apagar)
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
+
+-- Buscador de ventanas: todas las ventanas abiertas en fuzzel (como Telescope buffers)
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/windows.sh"))
+
+-- Tecla líder para abrir apps (como <leader> en vim): SUPER+O y luego una letra.
+-- Sale sola del modo tras abrir la app ("reset"); Esc cancela. Waybar muestra "-- abrir --".
+hl.bind(mainMod .. " + O", hl.dsp.submap("abrir"))
+
+hl.define_submap("abrir", "reset", function()
+    hl.bind("F", hl.dsp.exec_cmd("firefox"))
+    hl.bind("M", hl.dsp.exec_cmd("firefox --new-window https://teams.microsoft.com"))  -- Microsoft Teams
+    hl.bind("D", hl.dsp.exec_cmd("discord"))
+    hl.bind("S", hl.dsp.exec_cmd("steam"))
+    hl.bind("C", hl.dsp.exec_cmd("code"))
+    hl.bind("T", hl.dsp.exec_cmd(terminal))
+    hl.bind("E", hl.dsp.exec_cmd(fileManager))
+    hl.bind("K", hl.dsp.exec_cmd("keymapp"))
+    hl.bind("V", hl.dsp.exec_cmd("pavucontrol"))
+
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
+
+-- Layout master (DP-1): convertir la ventana activa en la principal (la del centro)
+hl.bind(mainMod .. " + M", hl.dsp.layout("swapwithmaster"))
 
 -- Historial del portapapeles (SUPER+V ya es flotante)
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard.sh"))
