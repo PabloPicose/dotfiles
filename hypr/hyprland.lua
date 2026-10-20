@@ -170,7 +170,11 @@ local mainMod = "SUPER"
 
 -- Programas
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + space",  hl.dsp.exec_cmd(menu))
+-- Lanzador: pulsar y soltar SUPER solo (como en KDE). En el Moonlander SUPER y Espacio
+-- están los dos en el pulgar izquierdo, así que SUPER+Espacio era incómodo.
+-- Volver a pulsarlo lo cierra. SUPER+D queda de reserva.
+hl.bind(mainMod .. " + Super_L", hl.dsp.exec_cmd("pkill -x fuzzel || " .. menu), { release = true })
+hl.bind(mainMod .. " + D",       hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd(fileManager))
 
 -- Ventanas
