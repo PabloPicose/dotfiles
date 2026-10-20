@@ -37,6 +37,8 @@ hl.on("hyprland.start", function ()
     -- Fondo de pantalla (~/.config/hypr/hyprpaper.conf) y barra (~/.config/waybar)
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
+    -- Notificaciones (~/.config/mako/config)
+    hl.exec_cmd("mako")
 end)
 
 
@@ -174,6 +176,20 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 -- Salida de emergencia: cierra la sesión de Hyprland
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
+
+-- Menú de energía (cerrar sesión / suspender / reiniciar / apagar)
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
+
+-- Notificaciones: cerrar la última / todas
+hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd("makoctl dismiss"))
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("makoctl dismiss --all"))
+
+-- Capturas (se guardan en ~/Pictures/Screenshots y se copian al portapapeles)
+-- Print = zona · SHIFT+Print = ventana activa · CTRL+Print = monitor actual
+local shots = "hyprshot -o ~/Pictures/Screenshots "
+hl.bind("Print",         hl.dsp.exec_cmd(shots .. "-m region"))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd(shots .. "-m window -m active"))
+hl.bind("CTRL + Print",  hl.dsp.exec_cmd(shots .. "-m output -m active"))
 
 -- Cambiar distribución de teclado us <-> es (como Meta+Alt+K en KDE)
 hl.bind(mainMod .. " + ALT + K", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))

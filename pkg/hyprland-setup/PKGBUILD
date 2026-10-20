@@ -5,7 +5,7 @@
 # No añadir aquí cosas que también uso en KDE (kitty, dolphin, polkit-kde...).
 pkgname=hyprland-setup
 pkgver=1
-pkgrel=1
+pkgrel=2
 pkgdesc='Metapaquete: Hyprland y sus programas (quitar con pacman -Rns hyprland-setup)'
 arch=('any')
 license=('0BSD')
@@ -14,6 +14,9 @@ depends=(
   'hyprpaper'   # fondo de pantalla
   'waybar'      # barra
   'fuzzel'      # lanzador (SUPER+Space)
+  'mako'        # notificaciones
+  'hyprshot'    # capturas (trae grim, slurp, jq)
+  'xdg-desktop-portal-hyprland'  # compartir pantalla (Teams en Firefox, Discord)
 )
 
 package() {
