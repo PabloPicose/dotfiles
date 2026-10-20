@@ -165,7 +165,10 @@ hl.config({
         force_default_wallpaper = 0,    -- sin fondos anime
         disable_hyprland_logo   = true,
         disable_splash_rendering = true, -- quita el texto aleatorio de abajo ("Help I forgot to install kitty"...)
-        vrr = 2,                         -- VRR (G-Sync/FreeSync) solo en pantalla completa: juegos fluidos sin tearing
+        -- VRR (G-Sync/FreeSync) solo en pantalla completa de juegos/vídeo (content type), no de apps normales.
+        -- Con 2 (cualquier pantalla completa) kitty/Firefox bajaban la frecuencia en reposo y al mover el ratón
+        -- subía y bajaba → parpadeo (sobre todo en el VA de DP-1). Los juegos se marcan con content = "game" (regla "juegos").
+        vrr = 3,
     },
 })
 
@@ -360,6 +363,7 @@ hl.window_rule({
 
     monitor      = "DP-1",
     fullscreen   = true,
+    content      = "game",          -- activa el VRR (misc.vrr = 3)
     idle_inhibit = "fullscreen",   -- no apagar la pantalla mientras se juega
 })
 
