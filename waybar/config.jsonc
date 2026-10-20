@@ -10,9 +10,12 @@
     "modules-center": ["clock"],
     "modules-right":  ["hyprland/language", "wireplumber", "cpu", "memory", "tray"],
 
-    // Escritorios del monitor actual; clic para ir
+    // Escritorios del monitor actual; rueda del ratón para cambiar.
+    // Clic desactivado: waybar 0.15 manda "dispatch workspace N" (formato antiguo),
+    // que Hyprland con config Lua rechaza. Usar SUPER+1..0.
     "hyprland/workspaces": {
         "format": "{id}",
+        "disable-click": true,
         "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"m-1\" })'",
         "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"m+1\" })'"
     },
