@@ -203,11 +203,13 @@ hl.define_submap("resize", function()
     hl.bind("Return", hl.dsp.submap("reset"))
 end)
 
--- Monitores: SUPER + , / . mueve el foco; con SHIFT mueve la ventana
-hl.bind(mainMod .. " + comma",          hl.dsp.focus({ monitor = "left" }))
-hl.bind(mainMod .. " + period",         hl.dsp.focus({ monitor = "right" }))
-hl.bind(mainMod .. " + SHIFT + comma",  hl.dsp.window.move({ monitor = "left" }))
-hl.bind(mainMod .. " + SHIFT + period", hl.dsp.window.move({ monitor = "right" }))
+-- Monitores (DP-2 | DP-1 | DP-3)
+-- SUPER + h/l ya cruza de monitor al llegar al borde (como smart-splits en nvim).
+-- SUPER + CTRL + h/l salta directo al monitor de al lado; con SHIFT se lleva la ventana.
+hl.bind(mainMod .. " + CTRL + H",         hl.dsp.focus({ monitor = "left" }))
+hl.bind(mainMod .. " + CTRL + L",         hl.dsp.focus({ monitor = "right" }))
+hl.bind(mainMod .. " + CTRL + SHIFT + H", hl.dsp.window.move({ monitor = "left" }))
+hl.bind(mainMod .. " + CTRL + SHIFT + L", hl.dsp.window.move({ monitor = "right" }))
 
 -- Escritorios: SUPER + [0-9]; SUPER + SHIFT + [0-9] mueve la ventana
 for i = 1, 10 do
@@ -219,9 +221,9 @@ end
 -- Volver al escritorio anterior (como <C-^> en vim)
 hl.bind(mainMod .. " + Tab", hl.dsp.focus({ workspace = "previous" }))
 
--- Escritorio anterior / siguiente del monitor actual (como [b / ]b en vim)
-hl.bind(mainMod .. " + bracketleft",  hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + bracketright", hl.dsp.focus({ workspace = "m+1" }))
+-- Escritorio anterior / siguiente en el monitor actual, aunque esté vacío (como gT / gt en vim)
+hl.bind(mainMod .. " + bracketleft",  hl.dsp.focus({ workspace = "r-1" }))
+hl.bind(mainMod .. " + bracketright", hl.dsp.focus({ workspace = "r+1" }))
 
 -- Scratchpad
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))

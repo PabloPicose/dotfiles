@@ -16,8 +16,8 @@
     "hyprland/workspaces": {
         "format": "{id}",
         "disable-click": true,
-        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"m-1\" })'",
-        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"m+1\" })'"
+        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"r-1\" })'",
+        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"r+1\" })'"
     },
 
     // Muestra el modo activo (p. ej. "resize" tras SUPER+R), como el modo de vim
