@@ -36,7 +36,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
     -- Fondo de pantalla (~/.config/hypr/hyprpaper.conf) y barra (~/.config/waybar)
     hl.exec_cmd("hyprpaper")
-    hl.exec_cmd("waybar")
+    hl.exec_cmd("~/.config/hypr/scripts/waybar.sh")   -- se relanza solo si se cae
     -- Notificaciones (~/.config/mako/config)
     hl.exec_cmd("mako")
     -- Historial del portapapeles: guarda todo lo copiado (texto e imágenes)
