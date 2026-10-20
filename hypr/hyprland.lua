@@ -153,7 +153,7 @@ hl.config({
         kb_variant = ",winkeys",
         kb_options = "",
 
-        follow_mouse = 1,
+        follow_mouse = 0,   -- pasar el ratón por encima NO cambia el foco (solo teclado o clic)
         sensitivity  = 0,
     },
 })
