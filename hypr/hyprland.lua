@@ -293,3 +293,17 @@ hl.window_rule({
 
     no_focus = true,
 })
+
+-- Juegos: siempre en el monitor principal (DP-1) y a pantalla completa.
+-- Los juegos de Steam con Proton tienen clase steam_app_<id>; los nativos de Linux usan su propio nombre.
+-- Para añadir un juego nativo: abrirlo, mirar su clase con `hyprctl clients` y añadirla a la lista.
+local juegosNativos = { "hoi4" }
+
+hl.window_rule({
+    name  = "juegos",
+    match = { class = "^(steam_app_[0-9]+|" .. table.concat(juegosNativos, "|") .. ")$" },
+
+    monitor      = "DP-1",
+    fullscreen   = true,
+    idle_inhibit = "fullscreen",   -- no apagar la pantalla mientras se juega
+})
