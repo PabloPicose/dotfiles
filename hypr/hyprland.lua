@@ -193,12 +193,9 @@ hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipb
 hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd("makoctl dismiss"))
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("makoctl dismiss --all"))
 
--- Capturas (se guardan en ~/Pictures/Screenshots y se copian al portapapeles)
--- Print = zona · SHIFT+Print = ventana activa · CTRL+Print = monitor actual
-local shots = "hyprshot -o ~/Pictures/Screenshots "
-hl.bind("Print",         hl.dsp.exec_cmd(shots .. "-m region"))
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd(shots .. "-m window -m active"))
-hl.bind("CTRL + Print",  hl.dsp.exec_cmd(shots .. "-m output -m active"))
+-- Captura de una zona → directa al portapapeles, sin guardar archivo. Pegar con CTRL+V.
+-- (Sin Impr Pant: en el Moonlander no se usa. cliphist también la guarda → SUPER+SHIFT+V)
+hl.bind(mainMod .. " + SHIFT + period", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
 
 -- Cambiar distribución de teclado us <-> es (como Meta+Alt+K en KDE)
 hl.bind(mainMod .. " + ALT + K", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
