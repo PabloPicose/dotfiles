@@ -39,6 +39,9 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("waybar")
     -- Notificaciones (~/.config/mako/config)
     hl.exec_cmd("mako")
+    -- Historial del portapapeles: guarda todo lo copiado (texto e imágenes)
+    hl.exec_cmd("wl-paste --type text --watch cliphist store")
+    hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
 
 
@@ -179,6 +182,9 @@ hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 
 -- Menú de energía (cerrar sesión / suspender / reiniciar / apagar)
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
+
+-- Historial del portapapeles (SUPER+V ya es flotante)
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard.sh"))
 
 -- Notificaciones: cerrar la última / todas
 hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd("makoctl dismiss"))
