@@ -83,6 +83,9 @@ hl.config({
         rounding       = 8,
         rounding_power = 2,
 
+        -- Oscurecer lo de detrás cuando el scratchpad (SUPER+S) está visible
+        dim_special = 0.4,
+
         active_opacity   = 1.0,
         inactive_opacity = 1.0,
 

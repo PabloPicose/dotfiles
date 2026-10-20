@@ -14,8 +14,11 @@
     // Clic desactivado: waybar 0.15 manda "dispatch workspace N" (formato antiguo),
     // que Hyprland con config Lua rechaza. Usar SUPER+1..0.
     "hyprland/workspaces": {
-        "format": "{id}",
+        "format": "{name}",
         "disable-click": true,
+        // Muestra "magic" (el scratchpad) solo mientras está visible
+        "show-special": true,
+        "special-visible-only": true,
         "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"r-1\" })'",
         "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"r+1\" })'"
     },

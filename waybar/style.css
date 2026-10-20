@@ -37,6 +37,13 @@ window#waybar {
     background: @accent;
 }
 
+/* Scratchpad visible (SUPER+S) */
+#workspaces button.special {
+    color: @mantle;
+    background: @peach;
+    font-weight: bold;
+}
+
 #workspaces button.urgent {
     color: @mantle;
     background: @red;
