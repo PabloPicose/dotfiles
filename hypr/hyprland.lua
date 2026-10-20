@@ -315,3 +315,16 @@ hl.window_rule({
     fullscreen   = true,
     idle_inhibit = "fullscreen",   -- no apagar la pantalla mientras se juega
 })
+
+-- Cada app en su monitor (al abrirse). Discord no se fija: va donde esté el foco.
+hl.window_rule({
+    name    = "steam-dp3",
+    match   = { class = "^steam$" },   -- el cliente; los juegos (steam_app_*) van a DP-1 con la regla "juegos"
+    monitor = "DP-3",
+})
+
+hl.window_rule({
+    name    = "firefox-dp2",
+    match   = { class = "^firefox$" }, -- incluye Teams en el navegador
+    monitor = "DP-2",
+})
