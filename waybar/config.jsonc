@@ -7,8 +7,8 @@
     "spacing": 6,
 
     "modules-left":   ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right":  ["hyprland/language", "wireplumber", "cpu", "memory", "tray"],
+    "modules-center": ["mpris", "clock"],
+    "modules-right":  ["idle_inhibitor", "hyprland/language", "wireplumber", "network", "cpu", "memory", "tray"],
 
     // Escritorios del monitor actual; rueda del ratón para cambiar.
     // Clic desactivado: waybar 0.15 manda "dispatch workspace N" (formato antiguo),
@@ -45,20 +45,51 @@
         "format": "󰌌 {short}"
     },
 
+    // Clic: mezclador (pavucontrol) · clic derecho: silenciar · rueda: volumen
     "wireplumber": {
         "format": "{icon} {volume}%",
         "format-muted": "󰝟 mute",
         "format-icons": ["󰕿", "󰖀", "󰕾"],
-        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5
+    },
+
+    // Música / vídeo en curso (Firefox, Spotify…). Clic: play/pausa · rueda: siguiente/anterior
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "dynamic-order": ["title", "artist"],
+        "dynamic-len": 45,
+        "player-icons": { "default": "󰐊", "firefox": "󰈹", "spotify": "󰓇" },
+        "status-icons": { "paused": "󰏤" },
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    // Red: cable o wifi; pasar el ratón muestra la IP
+    "network": {
+        "format-ethernet": "󰈀",
+        "format-wifi": "󰖩 {essid}",
+        "format-disconnected": "󰈂 sin red",
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    // Clic: impedir que las pantallas se apaguen (hypridle) — p. ej. leyendo o en una presentación
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": { "activated": "󰅶", "deactivated": "󰾪" },
+        "tooltip-format-activated": "Las pantallas NO se apagan",
+        "tooltip-format-deactivated": "Las pantallas se apagan a los 15 min"
     },
 
     "cpu": {
-        "format": " {usage}%",
+        "format": "󰻠 {usage}%",
         "interval": 5
     },
 
     "memory": {
-        "format": " {percentage}%",
+        "format": "󰍛 {percentage}%",
         "interval": 5
     },
 

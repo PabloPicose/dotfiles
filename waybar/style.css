@@ -56,6 +56,9 @@ window#waybar {
 }
 
 #window,
+#mpris,
+#network,
+#idle_inhibitor,
 #clock,
 #language,
 #wireplumber,
@@ -70,5 +73,19 @@ window#waybar {
 }
 
 #wireplumber.muted {
+    color: @red;
+}
+
+#mpris.paused {
+    color: @subtext;
+}
+
+/* Inhibidor activo: las pantallas no se apagan */
+#idle_inhibitor.activated {
+    color: @mantle;
+    background: @peach;
+}
+
+#network.disconnected {
     color: @red;
 }
