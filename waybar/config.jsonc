@@ -1,0 +1,62 @@
+// Waybar — barra arriba en todos los monitores
+// Recargar: pkill -SIGUSR2 waybar
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 6,
+
+    "modules-left":   ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right":  ["hyprland/language", "wireplumber", "cpu", "memory", "tray"],
+
+    // Escritorios del monitor actual; clic para ir
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-scroll-up": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"m-1\" })'",
+        "on-scroll-down": "hyprctl dispatch 'hl.dsp.focus({ workspace = \"m+1\" })'"
+    },
+
+    // Muestra el modo activo (p. ej. "resize" tras SUPER+R), como el modo de vim
+    "hyprland/submap": {
+        "format": "-- {} --",
+        "tooltip": false
+    },
+
+    "hyprland/window": {
+        "max-length": 60,
+        "separate-outputs": true
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%A %d %B %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    },
+
+    // us / es (SUPER+ALT+K para cambiar)
+    "hyprland/language": {
+        "format": "󰌌 {short}"
+    },
+
+    "wireplumber": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 mute",
+        "format-icons": ["󰕿", "󰖀", "󰕾"],
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 5
+    },
+
+    "memory": {
+        "format": " {percentage}%",
+        "interval": 5
+    },
+
+    "tray": {
+        "spacing": 8
+    }
+}

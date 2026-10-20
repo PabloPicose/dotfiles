@@ -1,0 +1,67 @@
+/* Catppuccin Macchiato + azul de kitty (#7A9EC4) */
+@define-color base     #24273a;
+@define-color mantle   #1e2030;
+@define-color surface0 #363a4f;
+@define-color surface1 #494d64;
+@define-color text     #cad3f5;
+@define-color subtext  #a5adcb;
+@define-color accent   #7A9EC4;
+@define-color red      #ed8796;
+@define-color peach    #f5a97f;
+
+* {
+    font-family: "MesloLGM Nerd Font Propo", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: alpha(@mantle, 0.9);
+    color: @text;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: @subtext;
+    background: transparent;
+}
+
+#workspaces button:hover {
+    background: @surface0;
+}
+
+#workspaces button.active {
+    color: @mantle;
+    background: @accent;
+}
+
+#workspaces button.urgent {
+    color: @mantle;
+    background: @red;
+}
+
+#submap {
+    padding: 0 10px;
+    color: @mantle;
+    background: @peach;
+}
+
+#window,
+#clock,
+#language,
+#wireplumber,
+#cpu,
+#memory,
+#tray {
+    padding: 0 10px;
+}
+
+#clock {
+    font-weight: bold;
+}
+
+#wireplumber.muted {
+    color: @red;
+}

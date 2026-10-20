@@ -34,6 +34,9 @@ local menu        = "fuzzel"
 hl.on("hyprland.start", function ()
     -- Ventanas de contraseña para apps gráficas (Dolphin como admin, etc.)
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
+    -- Fondo de pantalla (~/.config/hypr/hyprpaper.conf) y barra (~/.config/waybar)
+    hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("waybar")
 end)
 
 
