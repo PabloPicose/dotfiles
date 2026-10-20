@@ -231,11 +231,13 @@ end)
 
 -- Monitores (DP-2 | DP-1 | DP-3)
 -- SUPER + h/l ya cruza de monitor al llegar al borde (como smart-splits en nvim).
--- SUPER + CTRL + h/l salta directo al monitor de al lado; con SHIFT se lleva la ventana.
-hl.bind(mainMod .. " + CTRL + H",         hl.dsp.focus({ monitor = "left" }))
-hl.bind(mainMod .. " + CTRL + L",         hl.dsp.focus({ monitor = "right" }))
-hl.bind(mainMod .. " + CTRL + SHIFT + H", hl.dsp.window.move({ monitor = "left" }))
-hl.bind(mainMod .. " + CTRL + SHIFT + L", hl.dsp.window.move({ monitor = "right" }))
+-- SUPER + CTRL + h/l salta directo al monitor de al lado.
+-- Hyper + h/l se lleva la ventana (Hyper = SUPER+CTRL+ALT+SHIFT, una sola tecla en el Moonlander).
+local hyper = "SUPER + CTRL + ALT + SHIFT"
+hl.bind(mainMod .. " + CTRL + H", hl.dsp.focus({ monitor = "left" }))
+hl.bind(mainMod .. " + CTRL + L", hl.dsp.focus({ monitor = "right" }))
+hl.bind(hyper .. " + H",          hl.dsp.window.move({ monitor = "left" }))
+hl.bind(hyper .. " + L",          hl.dsp.window.move({ monitor = "right" }))
 
 -- Escritorios: SUPER + [0-9]; SUPER + SHIFT + [0-9] mueve la ventana
 for i = 1, 10 do
