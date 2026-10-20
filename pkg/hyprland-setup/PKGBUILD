@@ -1,0 +1,21 @@
+# Metapaquete: todo lo que solo uso en Hyprland.
+# Instalar / actualizar tras cambiar la lista:  makepkg -si
+# Quitar Hyprland y todo esto (sin tocar KDE):  sudo pacman -Rns hyprland-setup
+#
+# No añadir aquí cosas que también uso en KDE (kitty, dolphin, polkit-kde...).
+pkgname=hyprland-setup
+pkgver=1
+pkgrel=1
+pkgdesc='Metapaquete: Hyprland y sus programas (quitar con pacman -Rns hyprland-setup)'
+arch=('any')
+license=('0BSD')
+depends=(
+  'hyprland'
+  'hyprpaper'   # fondo de pantalla
+  'waybar'      # barra
+  'fuzzel'      # lanzador (SUPER+Space)
+)
+
+package() {
+  :
+}
