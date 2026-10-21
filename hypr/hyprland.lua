@@ -89,7 +89,8 @@ hl.config({
             inactive_border = "rgba(595959aa)",
         },
 
-        resize_on_border = false,
+        -- Redimensionar arrastrando el borde (o el hueco entre ventanas) con el ratón, sin SUPER
+        resize_on_border = true,
         allow_tearing    = false,
 
         layout = "dwindle",
