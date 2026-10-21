@@ -47,6 +47,9 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("hypridle")
     -- Montar USB / discos al conectarlos (en KDE lo hace Plasma). Icono en la bandeja solo si hay alguno.
     hl.exec_cmd("udiskie --automount --notify --smart-tray --appindicator")
+    -- Iconos de bandeja X11 antiguos (XEmbed: Wine/Proton, Battle.net…) → bandeja de waybar (SNI).
+    -- Sin esto Wine crea su propia ventanita blanca de bandeja. Viene con KDE (plasma-workspace).
+    hl.exec_cmd("xembedsniproxy")
 end)
 
 
