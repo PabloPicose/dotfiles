@@ -188,6 +188,9 @@ hl.config({
         kb_options = "",
 
         follow_mouse = 0,   -- pasar el ratón por encima NO cambia el foco (solo teclado o clic)
+        -- Por defecto (1), pasar de una ventana en mosaico a una flotante (o al revés) SÍ cambia el foco
+        -- aunque follow_mouse = 0 (popups de Steam/Battle.net, atajos…). 0 = solo teclado o clic.
+        float_switch_override_focus = 0,
         sensitivity  = 0,
     },
 })
