@@ -223,6 +223,44 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))    -- dwindle: vertical <-> horizontal
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
+-- Modo mitad (SUPER+Z): en el escritorio actual las ventanas ocupan solo media pantalla, aunque haya una sola
+-- (siguen en mosaico dentro de esa mitad). Cada pulsación: completo → mitad derecha → mitad izquierda → completo.
+-- Es un margen exterior (gaps_out) enorme en un lado, con reglas de escritorio que se activan/desactivan en caliente.
+local mitadReglas = {}   -- ["<id>:<lado>:<ancho>"] = regla
+local mitadEstado = {}   -- [id del escritorio] = nil | "derecha" | "izquierda"
+local mitadSiguiente = { [""] = "derecha", derecha = "izquierda", izquierda = "" }
+
+local function mitadRegla(ws, lado)
+    local ancho = ws.monitor.width
+    local clave = ws.id .. ":" .. lado .. ":" .. ancho
+    if not mitadReglas[clave] then
+        local mitad = math.floor(ancho / 2)
+        mitadReglas[clave] = hl.workspace_rule({
+            workspace = tostring(ws.id),
+            gaps_out  = { top = 8, bottom = 8,
+                          left  = lado == "derecha"   and mitad or 8,
+                          right = lado == "izquierda" and mitad or 8 },
+        })
+    end
+    return mitadReglas[clave]
+end
+
+-- Sin argumento: escritorio activo. Con un id (pruebas): `hyprctl dispatch 'modoMitad(9)'`.
+function modoMitad(id)
+    local ws = hl.get_active_workspace()
+    if type(id) == "number" then
+        for _, w in ipairs(hl.get_workspaces()) do if w.id == id then ws = w end end
+    end
+    if not ws or not ws.monitor then return end
+    local actual = mitadEstado[ws.id] or ""
+    if actual ~= "" then mitadRegla(ws, actual):set_enabled(false) end
+    local nuevo = mitadSiguiente[actual]
+    if nuevo ~= "" then mitadRegla(ws, nuevo):set_enabled(true) end
+    mitadEstado[ws.id] = nuevo ~= "" and nuevo or nil
+end
+
+hl.bind(mainMod .. " + Z", function() modoMitad() end)
+
 -- Salida de emergencia: cierra la sesión de Hyprland
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 
