@@ -50,6 +50,9 @@ hl.on("hyprland.start", function ()
     -- Iconos de bandeja X11 antiguos (XEmbed: Wine/Proton, Battle.net…) → bandeja de waybar (SNI).
     -- Sin esto Wine crea su propia ventanita blanca de bandeja. Viene con KDE (plasma-workspace).
     hl.exec_cmd("xembedsniproxy")
+    -- Arctis Sound Manager: daemon (sin él no suenan los cascos) + icono en la bandeja.
+    -- Sus servicios de systemd cuelgan de graphical-session.target, que KDE activa y Hyprland no → arrancarlos a mano.
+    hl.exec_cmd("systemctl --user start arctis-manager.service app-ArctisManager.service")
 end)
 
 
