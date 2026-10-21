@@ -190,9 +190,11 @@ hl.config({
         kb_variant = ",winkeys",
         kb_options = "",
 
-        follow_mouse = 0,   -- pasar el ratón por encima NO cambia el foco (solo teclado o clic)
+        -- 2 = como KDE: el ratón (scroll, hover) va a la ventana que tiene debajo, pero el foco del teclado
+        -- no cambia hasta hacer clic. (0 = el ratón solo afectaba a la ventana con foco: no se podía hacer scroll en otra.)
+        follow_mouse = 2,
         -- Por defecto (1), pasar de una ventana en mosaico a una flotante (o al revés) SÍ cambia el foco
-        -- aunque follow_mouse = 0 (popups de Steam/Battle.net, atajos…). 0 = solo teclado o clic.
+        -- aunque follow_mouse ≠ 1 (popups de Steam/Battle.net, atajos…). 0 = solo teclado o clic.
         float_switch_override_focus = 0,
         sensitivity  = 0,
     },
