@@ -389,6 +389,16 @@ hl.window_rule({
     content    = "none",
 })
 
+-- Menú del icono de la bandeja de Battle.net (clic derecho en waybar): Wine lo pinta desplazado +2560 px
+-- (XWayland pone DP-1 en x=0 y Hyprland en x=2560) → aparecía en DP-3 o fuera de pantalla.
+-- Es la única ventana flotante con título exacto "Battle.net" (launcher en mosaico; login/instalador tienen otro título).
+-- Se pone a la izquierda del cursor (la bandeja está en el borde derecho).
+hl.window_rule({
+    name  = "battlenet-menu",
+    match = { class = "^steam_app_[0-9]+$", title = "^Battle\\.net$", float = true },
+    move  = "cursor_x-window_w cursor_y",
+})
+
 -- Cada app en su monitor (al abrirse). Discord no se fija: va donde esté el foco.
 hl.window_rule({
     name    = "steam-dp3",
