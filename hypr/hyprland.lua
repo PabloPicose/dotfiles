@@ -378,10 +378,11 @@ hl.window_rule({
 
 -- El launcher de Battle.net (Proton, acceso directo de Steam) también es steam_app_<id> y caía en "juegos":
 -- pantalla completa + content game → VRR en DP-1 con una app que apenas repinta → parpadeo.
--- Se deshace solo para la ventana "Battle.net"; los juegos que abre (WoW…) comparten clase pero no título.
+-- Se deshace para las ventanas "Battle.net…"; los juegos que abre (WoW…) comparten clase pero no título.
+-- Fuera de Steam (umu-launcher, GAMEID=0) la clase es steam_app_0.
 hl.window_rule({
     name       = "battlenet",
-    match      = { class = "^steam_app_[0-9]+$", title = "^Battle\\.net$" },
+    match      = { class = "^steam_app_[0-9]+$", title = ".*Battle\\.net.*" },  -- launcher, "Configuración de Battle.net", login…
     fullscreen = false,
     content    = "none",
 })
