@@ -367,6 +367,16 @@ hl.window_rule({
     idle_inhibit = "fullscreen",   -- no apagar la pantalla mientras se juega
 })
 
+-- El launcher de Battle.net (Proton, acceso directo de Steam) también es steam_app_<id> y caía en "juegos":
+-- pantalla completa + content game → VRR en DP-1 con una app que apenas repinta → parpadeo.
+-- Se deshace solo para la ventana "Battle.net"; los juegos que abre (WoW…) comparten clase pero no título.
+hl.window_rule({
+    name       = "battlenet",
+    match      = { class = "^steam_app_[0-9]+$", title = "^Battle\\.net$" },
+    fullscreen = false,
+    content    = "none",
+})
+
 -- Cada app en su monitor (al abrirse). Discord no se fija: va donde esté el foco.
 hl.window_rule({
     name    = "steam-dp3",
