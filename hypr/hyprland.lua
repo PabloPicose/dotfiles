@@ -270,6 +270,7 @@ hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermen
 
 -- Buscador de ventanas: todas las ventanas abiertas en fuzzel (como Telescope buffers)
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/windows.sh"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/mapa-ventanas.sh"))  -- mapa de ventanas
 
 -- Manual de atajos (manual.md): SUPER+A en nvim flotante (q sale) · SUPER+SHIFT+A buscar en fuzzel
 hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd("~/.config/hypr/scripts/atajos.sh"))
@@ -453,6 +454,14 @@ hl.window_rule({
     name    = "steam-dp3",
     match   = { class = "^steam$" },   -- el cliente; los juegos (steam_app_*) van a DP-1 con la regla "juegos"
     monitor = "DP-3",
+})
+
+hl.window_rule({
+    name   = "mapa-ventanas",           -- mapa de ventanas (SUPER+SHIFT+W): flotante y centrado
+    match  = { class = "^mapa-ventanas$" },
+    float  = true,
+    size   = "monitor_w*0.85 monitor_h*0.8",
+    center = true,
 })
 
 hl.window_rule({
