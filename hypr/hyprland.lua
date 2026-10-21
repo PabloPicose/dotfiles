@@ -378,6 +378,16 @@ hl.window_rule({
     idle_inhibit = "fullscreen",   -- no apagar la pantalla mientras se juega
 })
 
+-- Juegos sin VRR: estrategia con FPS bajos y variables (al mover el ratón el mapa se redibuja y los FPS saltan)
+-- → con VRR el panel VA de DP-1 cambia de brillo = parpadeo. Siguen en DP-1 a pantalla completa.
+local juegosSinVrr = { "hoi4" }
+
+hl.window_rule({
+    name    = "juegos-sin-vrr",
+    match   = { class = "^(" .. table.concat(juegosSinVrr, "|") .. ")$" },
+    content = "none",
+})
+
 -- El launcher de Battle.net (Proton, acceso directo de Steam) también es steam_app_<id> y caía en "juegos":
 -- pantalla completa + content game → VRR en DP-1 con una app que apenas repinta → parpadeo.
 -- Se deshace para las ventanas "Battle.net…"; los juegos que abre (WoW…) comparten clase pero no título.
