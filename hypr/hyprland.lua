@@ -53,6 +53,8 @@ hl.on("hyprland.start", function ()
     -- Arctis Sound Manager: daemon (sin él no suenan los cascos) + icono en la bandeja.
     -- Sus servicios de systemd cuelgan de graphical-session.target, que KDE activa y Hyprland no → arrancarlos a mano.
     hl.exec_cmd("systemctl --user start arctis-manager.service app-ArctisManager.service")
+    -- Mientras se usa el PC, el Arctis no se apaga solo (hypridle lo cambia al irse/volver; ver arctis-apagado.sh)
+    hl.exec_cmd("sleep 5 && ~/.config/hypr/scripts/arctis-apagado.sh uso")
 end)
 
 
