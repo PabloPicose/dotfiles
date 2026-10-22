@@ -277,6 +277,8 @@ hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/mapa-
 -- Manual de atajos (manual.md): SUPER+A en nvim flotante (q sale) · SUPER+SHIFT+A buscar en fuzzel
 hl.bind(mainMod .. " + A",         hl.dsp.exec_cmd("~/.config/hypr/scripts/atajos.sh"))
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/atajos-buscar.sh"))
+-- Lista de TUIs y comandos de terminal (~/.config/hypr/tuis.md), editable. SUPER+T ya es togglesplit.
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/tuis.sh"))
 
 -- Tecla líder para abrir apps (como <leader> en vim): SUPER+O y luego una letra.
 -- Sale sola del modo tras abrir la app ("reset"); Esc cancela. Waybar muestra "-- abrir --".
@@ -471,6 +473,14 @@ hl.window_rule({
     match  = { class = "^atajos$" },
     float  = true,
     size   = "monitor_w*0.7 monitor_h*0.85",
+    center = true,
+})
+
+hl.window_rule({
+    name   = "tuis",                    -- lista de TUIs (SUPER+SHIFT+T): flotante y centrado
+    match  = { class = "^tuis$" },
+    float  = true,
+    size   = "monitor_w*0.6 monitor_h*0.8",
     center = true,
 })
 
