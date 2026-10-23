@@ -226,7 +226,17 @@ hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd(fileManager))
 
 -- Ventanas
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
+-- Pantalla completa. En Firefox, sin avisarle (client = 0): si se entera, oculta la barra de marcadores.
+-- Los vídeos (tecla F de YouTube) siguen yendo a pantalla completa de verdad: eso lo pide Firefox.
+hl.bind(mainMod .. " + F", function()
+    local w = hl.get_active_window()
+    if w and w.class == "firefox" then
+        local estado = w.fullscreen ~= 0 and 0 or 2
+        hl.dispatch(hl.dsp.window.fullscreen_state({ internal = estado, client = 0 }))
+    else
+        hl.dispatch(hl.dsp.window.fullscreen())
+    end
+end)
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))    -- dwindle: vertical <-> horizontal
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
