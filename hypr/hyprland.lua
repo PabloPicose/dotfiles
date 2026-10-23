@@ -23,6 +23,8 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" 
 ---------------------
 
 local terminal    = "kitty"
+-- Firefox personal ("Original profile"). Sin --profile, `firefox` abre el último perfil usado (indra tras abrir Teams)
+local firefox     = 'firefox --profile "$HOME/.config/mozilla/firefox/vco597mg.default-release"'
 local teams       = 'firefox --profile "$HOME/.config/mozilla/firefox/6pC8qnyy.Profile 1" --new-window https://teams.microsoft.com'
 local fileManager = "dolphin"
 local menu        = "fuzzel"
@@ -288,7 +290,7 @@ hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/tuis.
 hl.bind(mainMod .. " + O", hl.dsp.submap("abrir"))
 
 hl.define_submap("abrir", "reset", function()
-    hl.bind("F", hl.dsp.exec_cmd("firefox"))
+    hl.bind("F", hl.dsp.exec_cmd(firefox))
     -- Microsoft Teams en el perfil de trabajo "indra". Es del gestor de perfiles nuevo (no está en
     -- profiles.ini), así que -P no lo encuentra: se abre por su carpeta. Si ya está abierto, añade una ventana.
     hl.bind("M", hl.dsp.exec_cmd(teams))
