@@ -1,0 +1,15 @@
+# Al entrar en KDE, el Arctis vuelve a apagarse solo a los 90 min.
+# Al apagar desde Hyprland se deja en 10 min (para que el cascos se apague) y el ajuste se guarda en el cascos.
+# Solo arranca con Plasma (plasma-workspace.target); en Hyprland lo pone hyprland.lua (arctis-apagado.sh uso).
+# Valores de pm_shutdown: 0 nunca, 1 = 10 min, 9 = 90 min (ver ~/.config/hypr/scripts/arctis-apagado.sh).
+[Unit]
+Description=Arctis: apagado automático a 90 min al entrar en KDE
+After=plasma-workspace.target arctis-manager.service
+
+[Service]
+Type=oneshot
+# Reintentar hasta 60 s: asm-daemon puede tardar en publicar su nombre en D-Bus
+ExecStart=/bin/sh -c 'for i in $$(seq 60); do busctl --user call name.giacomofurlan.ArctisManager.Next /name/giacomofurlan/ArctisManager/Next/Settings name.giacomofurlan.ArctisManager.Next.Settings SetSetting ss pm_shutdown 9 >/dev/null 2>&1 && exit 0; sleep 1; done; exit 1'
+
+[Install]
+WantedBy=plasma-workspace.target

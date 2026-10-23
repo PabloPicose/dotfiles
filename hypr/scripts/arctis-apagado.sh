@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Apagado automático del Arctis (Arctis Sound Manager, ajuste pm_shutdown) según si se usa el PC:
 #   uso      → nunca (mientras se usa el PC; lo pone hypridle al volver y Hyprland al arrancar)
-#   ausente  → 10 min (hypridle tras 10 min sin teclado/ratón, y al suspender)
-#   normal   → 90 min (al salir de Hyprland: el ajuste se guarda en el cascos y también vale en KDE)
+#   ausente  → 10 min (hypridle tras 10 min sin teclado/ratón, y al suspender o apagar)
+#   normal   → 90 min (al cerrar sesión o reiniciar: el ajuste se guarda en el cascos y también vale en KDE;
+#              al entrar en KDE lo pone arctis-normal-kde.service del metapaquete)
 # Valores del cascos (arctis_pro_wireless.yaml): 0 nunca, 1 = 10 min, 2 = 20, 3 = 30, 6 = 60, 9 = 90.
 case "$1" in
     uso)     valor=0 ;;

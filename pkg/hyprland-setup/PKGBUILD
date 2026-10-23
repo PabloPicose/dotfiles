@@ -5,7 +5,7 @@
 # No añadir aquí cosas que también uso en KDE (kitty, dolphin, polkit-kde...).
 pkgname=hyprland-setup
 pkgver=1
-pkgrel=7
+pkgrel=8
 pkgdesc='Metapaquete: Hyprland y sus programas (quitar con pacman -Rns hyprland-setup)'
 arch=('any')
 license=('0BSD')
@@ -23,6 +23,14 @@ depends=(
   'libappindicator'  # icono de udiskie en la bandeja de waybar (--appindicator)
 )
 
+# Arctis: al entrar en KDE vuelve a 90 min (al apagar desde Hyprland se queda en 10)
+source=('arctis-normal-kde.service')
+sha256sums=('20ce7c6a0df4fddfe57c95455cc6c56cffab33591507d8383a5656a188f1c882')
+
 package() {
-  :
+  local dir="$pkgdir/usr/lib/systemd/user"
+  install -Dm644 arctis-normal-kde.service "$dir/arctis-normal-kde.service"
+  # Activado para todos los usuarios sin `systemctl enable`; se borra con el paquete
+  install -d "$dir/plasma-workspace.target.wants"
+  ln -s ../arctis-normal-kde.service "$dir/plasma-workspace.target.wants/arctis-normal-kde.service"
 }
