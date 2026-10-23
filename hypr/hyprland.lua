@@ -413,7 +413,7 @@ hl.window_rule({
 -- Juegos: siempre en el monitor principal (DP-1) y a pantalla completa.
 -- Los juegos de Steam con Proton tienen clase steam_app_<id>; los nativos de Linux usan su propio nombre.
 -- Para añadir un juego nativo: abrirlo, mirar su clase con `hyprctl clients` y añadirla a la lista.
-local juegosNativos = { "hoi4" }
+local juegosNativos = { "hoi4", "Civ6" }
 
 hl.window_rule({
     name  = "juegos",
@@ -427,7 +427,7 @@ hl.window_rule({
 
 -- Juegos sin VRR: estrategia con FPS bajos y variables (al mover el ratón el mapa se redibuja y los FPS saltan)
 -- → con VRR el panel VA de DP-1 cambia de brillo = parpadeo. Siguen en DP-1 a pantalla completa.
-local juegosSinVrr = { "hoi4" }
+local juegosSinVrr = { "hoi4", "Civ6" }
 
 hl.window_rule({
     name    = "juegos-sin-vrr",
