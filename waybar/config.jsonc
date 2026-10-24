@@ -8,7 +8,7 @@
 
     "modules-left":   ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
     "modules-center": ["mpris", "clock"],
-    "modules-right":  ["idle_inhibitor", "hyprland/language", "wireplumber", "network", "cpu", "memory", "tray"],
+    "modules-right":  ["idle_inhibitor", "hyprland/language", "wireplumber", "network", "cpu", "memory", "custom/arctis", "tray"],
 
     // Escritorios del monitor actual; rueda del ratón para cambiar.
     // Clic desactivado: waybar 0.15 manda "dispatch workspace N" (formato antiguo),
@@ -92,6 +92,14 @@
     "memory": {
         "format": "󰍛 {percentage}%",
         "interval": 5
+    },
+
+    // Batería del Arctis (al lado de su icono de la bandeja, que se deja sin %). Oculto con el cascos apagado.
+    // Lee asm-daemon por D-Bus; en rojo con 25 % o menos.
+    "custom/arctis": {
+        "exec": "~/.config/waybar/scripts/arctis.sh",
+        "return-type": "json",
+        "interval": 30
     },
 
     "tray": {

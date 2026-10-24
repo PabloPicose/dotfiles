@@ -64,6 +64,7 @@ window#waybar {
 #wireplumber,
 #cpu,
 #memory,
+#custom-arctis,
 #tray {
     padding: 0 10px;
 }
@@ -88,4 +89,13 @@ window#waybar {
 
 #network.disconnected {
     color: @red;
+}
+
+/* Arctis con poca batería (25 % o menos) */
+#custom-arctis.low {
+    color: @red;
+}
+
+#custom-arctis.unknown {
+    color: @subtext;
 }
