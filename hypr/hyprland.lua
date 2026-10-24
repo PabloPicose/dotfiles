@@ -161,6 +161,26 @@ hl.config({
         mfact = 0.5,
         slave_count_for_center_master = 0,
     },
+    -- Grupos (SUPER+G): varias ventanas en un mismo hueco, con pestañas arriba (colores de waybar/kitty)
+    group = {
+        col = {
+            border_active   = "rgba(7A9EC4ee)",
+            border_inactive = "rgba(595959aa)",
+        },
+        groupbar = {
+            font_family         = "MesloLGM Nerd Font Propo",
+            font_size           = 11,
+            height              = 18,
+            gradients           = true,   -- fondo de color en cada pestaña
+            rounding            = 4,
+            text_color          = "rgba(1e2030ff)",   -- pestaña activa: texto oscuro sobre azul
+            text_color_inactive = "rgba(cad3f5ff)",
+            col = {
+                active   = "rgba(7A9EC4ee)",
+                inactive = "rgba(363a4fee)",
+            },
+        },
+    },
 })
 
 -- DP-1 es ultrapanorámico (3440 px): layout master con la ventana principal en el centro.
@@ -360,6 +380,27 @@ end
 
 hl.bind(mainMod .. " + SHIFT + R", function() restablecerLayout() end)
 
+-- Mostrar el escritorio (SUPER+SHIFT+D): el monitor actual pasa a un escritorio vacío ("escritorio-<monitor>",
+-- waybar lo muestra con ese nombre) y las ventanas se quedan donde estaban. Otra vez → vuelve al de antes.
+local escritorioVolver = {}   -- [monitor] = id del escritorio al que volver
+
+function mostrarEscritorio()
+    local mon, ws = hl.get_active_monitor(), hl.get_active_workspace()
+    if not mon or not ws then return end
+    local nombre = "escritorio-" .. mon.name
+    if ws.name == nombre then
+        if escritorioVolver[mon.name] then
+            hl.dispatch(hl.dsp.focus({ workspace = escritorioVolver[mon.name] }))
+        end
+        escritorioVolver[mon.name] = nil
+    else
+        escritorioVolver[mon.name] = ws.id
+        hl.dispatch(hl.dsp.focus({ workspace = "name:" .. nombre }))
+    end
+end
+
+hl.bind(mainMod .. " + SHIFT + D", function() mostrarEscritorio() end)
+
 -- Salida de emergencia: cierra la sesión de Hyprland
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 
@@ -463,6 +504,28 @@ hl.bind(mainMod .. " + Tab", hl.dsp.focus({ workspace = "previous" }))
 -- Escritorio anterior / siguiente en el monitor actual, aunque esté vacío (como gT / gt en vim)
 hl.bind(mainMod .. " + bracketleft",  hl.dsp.focus({ workspace = "r-1" }))
 hl.bind(mainMod .. " + bracketright", hl.dsp.focus({ workspace = "r+1" }))
+
+-- Grupos: ventanas unas delante de otras en el mismo hueco, con pestañas (como las pestañas de vim).
+-- SUPER+G entra en el modo (waybar muestra "-- grupo --"); pestaña siguiente/anterior también sin el modo.
+-- Con el ratón: clic en una pestaña para verla, arrastrar una ventana a la barra de pestañas para meterla.
+hl.bind(mainMod .. " + G", hl.dsp.submap("grupo"))
+hl.bind(mainMod .. " + CTRL + J", hl.dsp.group.next())
+hl.bind(mainMod .. " + CTRL + K", hl.dsp.group.prev())
+
+hl.define_submap("grupo", function()
+    -- h/j/k/l: meter la ventana activa en el grupo de ese lado (si allí no hay grupo, crea uno con las dos)
+    hl.bind("H", hl.dsp.window.move({ into_or_create_group = "left" }))
+    hl.bind("J", hl.dsp.window.move({ into_or_create_group = "down" }))
+    hl.bind("K", hl.dsp.window.move({ into_or_create_group = "up" }))
+    hl.bind("L", hl.dsp.window.move({ into_or_create_group = "right" }))
+    hl.bind("G", hl.dsp.group.toggle())                         -- la ventana activa → grupo / deshacer el grupo
+    hl.bind("O", hl.dsp.window.move({ out_of_group = true }))   -- sacar la ventana activa del grupo
+    hl.bind("N", hl.dsp.group.next())
+    hl.bind("P", hl.dsp.group.prev())
+
+    hl.bind("escape", hl.dsp.submap("reset"))
+    hl.bind("Return", hl.dsp.submap("reset"))
+end)
 
 -- Scratchpad
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
