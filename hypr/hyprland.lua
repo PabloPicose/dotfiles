@@ -279,6 +279,36 @@ end
 
 hl.bind(mainMod .. " + Z", function() modoMitad() end)
 
+-- Restablecer el layout del escritorio actual (SUPER+SHIFT+R, o = en el modo resize, como <C-w>= en vim):
+-- tamaños por defecto (DP-1: centro al 50 %; dwindle: mitades) y fuera el modo mitad. Las flotantes no se tocan.
+-- Truco: una regla de escritorio cambia el layout a otro un instante y al quitarla Hyprland lo rehace desde cero
+-- (mismas ventanas en el mismo sitio, solo vuelven los tamaños).
+local resetReglas = {}   -- ["<id>:<layout>"] = regla
+
+-- Sin argumento: escritorio activo. Con un id (pruebas): `hyprctl dispatch 'restablecerLayout(9)'`.
+function restablecerLayout(id)
+    local ws = hl.get_active_workspace()
+    if type(id) == "number" then
+        for _, w in ipairs(hl.get_workspaces()) do if w.id == id then ws = w end end
+    end
+    if not ws then return end
+    if mitadEstado[ws.id] then
+        mitadRegla(ws, mitadEstado[ws.id]):set_enabled(false)
+        mitadEstado[ws.id] = nil
+    end
+    local otro = ws.tiled_layout == "master" and "dwindle" or "master"
+    local clave = ws.id .. ":" .. otro
+    if not resetReglas[clave] then
+        resetReglas[clave] = hl.workspace_rule({ workspace = tostring(ws.id), layout = otro, enabled = false })
+    end
+    local regla = resetReglas[clave]
+    regla:set_enabled(true)
+    -- Quitarla en la misma llamada no hace nada: Hyprland tiene que aplicar el otro layout antes
+    hl.timer(function() regla:set_enabled(false) end, { timeout = 50, type = "oneshot" })
+end
+
+hl.bind(mainMod .. " + SHIFT + R", function() restablecerLayout() end)
+
 -- Salida de emergencia: cierra la sesión de Hyprland
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exit())
 
@@ -352,6 +382,7 @@ hl.define_submap("resize", function()
     hl.bind("J", hl.dsp.window.resize({ x = 0,   y = 30,  relative = true }), { repeating = true })
     hl.bind("K", hl.dsp.window.resize({ x = 0,   y = -30, relative = true }), { repeating = true })
     hl.bind("L", hl.dsp.window.resize({ x = 30,  y = 0,   relative = true }), { repeating = true })
+    hl.bind("equal", function() restablecerLayout() end)   -- tamaños por defecto (como <C-w>= en vim)
 
     hl.bind("escape", hl.dsp.submap("reset"))
     hl.bind("Return", hl.dsp.submap("reset"))
