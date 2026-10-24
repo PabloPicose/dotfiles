@@ -39,8 +39,6 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
     -- Fondo de pantalla (~/.config/hypr/hyprpaper.conf) y barra (~/.config/waybar)
     hl.exec_cmd("hyprpaper")
-    -- El fondo elegido en waypaper (SUPER+O w) se guarda en ~/.config/waypaper/config.ini; hyprpaper.conf queda de reserva
-    hl.exec_cmd("sleep 1 && waypaper --restore")
     hl.exec_cmd("~/.config/hypr/scripts/waybar.sh")   -- se relanza solo si se cae
     -- Notificaciones (~/.config/mako/config)
     hl.exec_cmd("mako")
@@ -433,7 +431,6 @@ hl.define_submap("abrir", "reset", function()
     hl.bind("E", hl.dsp.exec_cmd(fileManager))
     hl.bind("K", hl.dsp.exec_cmd("keymapp"))
     hl.bind("V", hl.dsp.exec_cmd("pavucontrol"))
-    hl.bind("W", hl.dsp.exec_cmd("waypaper"))   -- fondo de pantalla
 
     hl.bind("escape", hl.dsp.submap("reset"))
 end)
