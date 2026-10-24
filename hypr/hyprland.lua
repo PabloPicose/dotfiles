@@ -281,9 +281,52 @@ hl.bind(mainMod .. " + Z", function() modoMitad() end)
 
 -- Restablecer el layout del escritorio actual (SUPER+SHIFT+R, o = en el modo resize, como <C-w>= en vim):
 -- tamaños por defecto (DP-1: centro al 50 %; dwindle: mitades) y fuera el modo mitad. Las flotantes no se tocan.
--- Truco: una regla de escritorio cambia el layout a otro un instante y al quitarla Hyprland lo rehace desde cero
--- (mismas ventanas en el mismo sitio, solo vuelven los tamaños).
+-- Truco: una regla de escritorio cambia el layout a otro un instante y al quitarla Hyprland lo rehace desde cero.
+-- Al rehacerlo puede cambiar el orden (dwindle coloca según el foco), así que antes se guarda el centro de cada
+-- ventana y al final se devuelve cada una a su hueco (el más cercano a donde estaba) con swaps.
 local resetReglas = {}   -- ["<id>:<layout>"] = regla
+
+local function centrosMosaico(id)
+    local lista = {}
+    for _, w in ipairs(hl.get_workspace_windows(id)) do
+        if not w.floating and w.mapped and not w.hidden then
+            lista[#lista + 1] = { dir = w.address, x = w.at.x + w.size.x / 2, y = w.at.y + w.size.y / 2 }
+        end
+    end
+    return lista
+end
+
+-- antes: centros antes de rehacer. Empareja cada ventana con el hueco nuevo más cercano (de menor a mayor
+-- distancia) y la mueve allí intercambiándola con la que lo ocupa.
+local function devolverOrden(id, antes)
+    local huecos = centrosMosaico(id)
+    if #huecos ~= #antes then return end
+    local pares = {}
+    for i, a in ipairs(antes) do
+        for j, h in ipairs(huecos) do
+            pares[#pares + 1] = { i = i, j = j, d = (a.x - h.x) ^ 2 + (a.y - h.y) ^ 2 }
+        end
+    end
+    table.sort(pares, function(p, q) return p.d < q.d end)
+    local destino, usadoI, usadoJ = {}, {}, {}   -- destino[j] = ventana que debe acabar en el hueco j
+    for _, p in ipairs(pares) do
+        if not usadoI[p.i] and not usadoJ[p.j] then
+            destino[p.j] = antes[p.i].dir
+            usadoI[p.i], usadoJ[p.j] = true, true
+        end
+    end
+    local ocupa, donde = {}, {}   -- ocupa[j] = ventana en el hueco j · donde[ventana] = j
+    for j, h in ipairs(huecos) do ocupa[j], donde[h.dir] = h.dir, j end
+    for j = 1, #huecos do
+        local quiero, esta = destino[j], ocupa[j]
+        if quiero and quiero ~= esta then
+            hl.dispatch(hl.dsp.window.swap({ window = "address:" .. quiero, target = "address:" .. esta }))
+            local k = donde[quiero]
+            ocupa[j], ocupa[k] = quiero, esta
+            donde[quiero], donde[esta] = j, k
+        end
+    end
+end
 
 -- Sin argumento: escritorio activo. Con un id (pruebas): `hyprctl dispatch 'restablecerLayout(9)'`.
 function restablecerLayout(id)
@@ -302,9 +345,15 @@ function restablecerLayout(id)
         resetReglas[clave] = hl.workspace_rule({ workspace = tostring(ws.id), layout = otro, enabled = false })
     end
     local regla = resetReglas[clave]
+    local antes = centrosMosaico(ws.id)
     regla:set_enabled(true)
-    -- Quitarla en la misma llamada no hace nada: Hyprland tiene que aplicar el otro layout antes
-    hl.timer(function() regla:set_enabled(false) end, { timeout = 50, type = "oneshot" })
+    -- Quitarla en la misma llamada no hace nada: Hyprland tiene que aplicar el otro layout antes.
+    -- Igual para leer los huecos nuevos: un instante después de quitarla.
+    local wsId = ws.id
+    hl.timer(function()
+        regla:set_enabled(false)
+        hl.timer(function() devolverOrden(wsId, antes) end, { timeout = 50, type = "oneshot" })
+    end, { timeout = 50, type = "oneshot" })
 end
 
 hl.bind(mainMod .. " + SHIFT + R", function() restablecerLayout() end)
