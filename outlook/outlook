@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Arranca Outlook (outlook-for-linux) con outlook/bin delante en el PATH: su xdg-open manda los enlaces
+# web al Firefox de la empresa. Lo usa outlook-for-linux.desktop (enlazado en ~/.local/share/applications,
+# tapa al del paquete), así que vale igual desde KDE y desde fuzzel.
+# No sirve la opción defaultURLHandler de la app: pasa la URL sin comillas al shell y rompe los enlaces con "&".
+PATH="$(dirname "$(readlink -f "$0")")/bin:$PATH" exec /opt/outlook-for-linux/outlook-for-linux "$@"

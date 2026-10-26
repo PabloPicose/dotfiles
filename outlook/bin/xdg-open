@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# xdg-open solo para Outlook (ver ../outlook): http/https → Firefox de la empresa (perfil "indra");
+# lo demás (adjuntos, mailto…) al xdg-open normal.
+case "$1" in
+    http://*|https://*) exec firefox --profile "$HOME/.config/mozilla/firefox/6pC8qnyy.Profile 1" "$1" ;;
+esac
+exec /usr/bin/xdg-open "$@"
