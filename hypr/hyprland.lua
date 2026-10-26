@@ -604,12 +604,36 @@ hl.window_rule({
 -- Menú del icono de la bandeja de Battle.net (clic derecho en waybar): Wine lo pinta desplazado +2560 px
 -- (XWayland pone DP-1 en x=0 y Hyprland en x=2560) → aparecía en DP-3 o fuera de pantalla.
 -- Es la única ventana flotante con título exacto "Battle.net" (launcher en mosaico; login/instalador tienen otro título).
--- Se pone a la izquierda del cursor (la bandeja está en el borde derecho).
+-- Se pone a la izquierda del cursor (la bandeja está en el borde derecho) y debajo de la barra (30 px):
+-- con cursor_y la barra tapaba la primera opción.
 hl.window_rule({
     name  = "battlenet-menu",
     match = { class = "^steam_app_[0-9]+$", title = "^Battle\\.net$", float = true },
-    move  = "cursor_x-window_w cursor_y",
+    move  = "cursor_x-window_w 34",
 })
+
+-- El menú no se cerraba al hacer clic fuera: Wine espera ese clic, pero los clics en otras ventanas o en el
+-- escritorio no le llegan (XWayland). Se cierra con cualquier clic izquierdo fuera de él (el clic sigue llegando
+-- a donde se hizo) y al cambiar de escritorio.
+local function menuBattlenet()
+    for _, w in ipairs(hl.get_windows()) do
+        if w.floating and w.title == "Battle.net" and w.class:match("^steam_app_%d+$") then return w end
+    end
+end
+
+local function cerrarMenuBattlenet(soloSiClicFuera)
+    local m = menuBattlenet()
+    if not m then return end
+    local c = hl.get_cursor_pos()
+    if soloSiClicFuera and c and c.x >= m.at.x and c.x < m.at.x + m.size.x
+        and c.y >= m.at.y and c.y < m.at.y + m.size.y then
+        return
+    end
+    hl.dispatch(hl.dsp.window.close({ window = "address:" .. m.address }))
+end
+
+hl.bind("mouse:272", function() cerrarMenuBattlenet(true) end, { non_consuming = true })
+hl.on("workspace.active", function() cerrarMenuBattlenet(false) end)
 
 -- Cada app en su monitor (al abrirse). Discord no se fija: va donde esté el foco.
 hl.window_rule({
