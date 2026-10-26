@@ -23,9 +23,10 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" 
 ---------------------
 
 local terminal    = "kitty"
--- Firefox personal ("Original profile"). Sin --profile, `firefox` abre el último perfil usado (indra tras abrir Teams)
+-- Firefox personal ("Original profile"). Sin --profile, `firefox` abre el último perfil usado (indra si se abrió otro)
 local firefox     = 'firefox --profile "$HOME/.config/mozilla/firefox/vco597mg.default-release"'
-local teams       = 'firefox --profile "$HOME/.config/mozilla/firefox/6pC8qnyy.Profile 1" --new-window https://teams.microsoft.com'
+-- Microsoft Teams instalado como app de Chrome (PWA); mismo comando que su .desktop en ~/.local/share/applications
+local teams       = "google-chrome-stable --profile-directory=Default --app-id=ompifgpmddkgmclendfeacglnodjjndh"
 local fileManager = "dolphin"
 local menu        = "fuzzel"
 
@@ -421,8 +422,7 @@ hl.bind(mainMod .. " + O", hl.dsp.submap("abrir"))
 
 hl.define_submap("abrir", "reset", function()
     hl.bind("F", hl.dsp.exec_cmd(firefox))
-    -- Microsoft Teams en el perfil de trabajo "indra". Es del gestor de perfiles nuevo (no está en
-    -- profiles.ini), así que -P no lo encuentra: se abre por su carpeta. Si ya está abierto, añade una ventana.
+    -- Microsoft Teams (app de Chrome). Si ya está abierto, Chrome enfoca su ventana.
     hl.bind("M", hl.dsp.exec_cmd(teams))
     hl.bind("D", hl.dsp.exec_cmd("discord"))
     hl.bind("S", hl.dsp.exec_cmd("steam"))
@@ -644,6 +644,12 @@ hl.window_rule({
 
 hl.window_rule({
     name    = "firefox-dp2",
-    match   = { class = "^firefox$" }, -- incluye Teams en el navegador
+    match   = { class = "^firefox$" },
+    monitor = "DP-2",
+})
+
+hl.window_rule({
+    name    = "teams-dp2",              -- Teams (app de Chrome) con Firefox, en el monitor izquierdo
+    match   = { class = "^chrome-ompifgpmddkgmclendfeacglnodjjndh-Default$" },
     monitor = "DP-2",
 })
