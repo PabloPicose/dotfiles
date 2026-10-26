@@ -65,6 +65,7 @@ window#waybar {
 #cpu,
 #memory,
 #custom-arctis,
+#custom-teams,
 #tray {
     padding: 0 10px;
 }
@@ -98,4 +99,9 @@ window#waybar {
 
 #custom-arctis.unknown {
     color: @subtext;
+}
+
+/* Teams con mensajes sin leer */
+#custom-teams.unread {
+    color: @peach;
 }

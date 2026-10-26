@@ -8,7 +8,7 @@
 
     "modules-left":   ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
     "modules-center": ["mpris", "clock"],
-    "modules-right":  ["idle_inhibitor", "hyprland/language", "wireplumber", "network", "cpu", "memory", "custom/arctis", "tray"],
+    "modules-right":  ["idle_inhibitor", "hyprland/language", "wireplumber", "network", "cpu", "memory", "custom/arctis", "custom/teams", "tray"],
 
     // Escritorios del monitor actual; rueda del ratón para cambiar.
     // Clic desactivado: waybar 0.15 manda "dispatch workspace N" (formato antiguo),
@@ -100,6 +100,14 @@
         "exec": "~/.config/waybar/scripts/arctis.sh",
         "return-type": "json",
         "interval": 30
+    },
+
+    // Teams (app de Chrome): icono mientras está abierto, como si fuera de la bandeja; clic = ir a la ventana
+    "custom/teams": {
+        "exec": "~/.config/waybar/scripts/teams.sh",
+        "on-click": "~/.config/waybar/scripts/teams.sh focus",
+        "return-type": "json",
+        "interval": 2
     },
 
     "tray": {
