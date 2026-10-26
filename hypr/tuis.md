@@ -45,6 +45,7 @@ Se abre con `SUPER+SHIFT+T` (otra vez o `q` para cerrar). Editable: apunta aquí
 | `jq` | Leer / filtrar JSON (`hyprctl clients -j \| jq`) |
 | `tmux` | Sesiones y paneles en la terminal (prefix `CTRL+b`) |
 | `micro` | Editor sencillo (atajos tipo `CTRL+S`, `CTRL+Q`) |
+| `tele` | Telegram en la terminal (`Space` en un chat → `m` silenciar, `a` archivar) |
 
 ## Por probar (no instalados)
 
